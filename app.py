@@ -18,5 +18,20 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
+#route defs must be same name as route!
+
+@app.route('/home')
+def home():
+    return render_template('index.html')
+
+@app.route('/signUp')
+def signUp():
+    return render_template('signup.html')
+
+@app.route('/signIn')
+def signIn():
+    return render_template('signin.html')
+
+
 if __name__=='__main__':
     app.run(debug=True)
