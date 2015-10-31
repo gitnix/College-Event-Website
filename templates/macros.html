@@ -9,7 +9,7 @@
 {% macro flash_msg() %}
 {% with messages = get_flashed_messages() %}
     {% if messages %}
-        <ul class="flashyo">
+        <ul class="flash">
         {% for message in messages %}
             <li class="alert alert-warning flash"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Warning!</strong> {{message}}

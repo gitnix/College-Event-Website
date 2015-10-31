@@ -1,4 +1,3 @@
-{% from "macros.html" import nav_link with context %}
 {% from "macros.html" import flash_msg with context %}
 
 <!DOCTYPE html>
@@ -16,35 +15,22 @@
 
 <body>
     <div class="container">
-        .<div class= "header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    {{ nav_link('main', 'Home') }}
-                    {{ nav_link('signIn', 'Sign In') }}
-                    {{ nav_link('signUp', 'Sign Up') }}
-                </ul>
-            </nav>
-            <h3 clss="text-muted">University Event Finder</h3>
-        </div>
 
-        <!-- remove wrapper div if goes unused -->
-        <div class="wrapper">      
+        .<div class= "header">
+        {% block header %} {% include 'header.html' %} {% endblock %}
+        </div>    
 
             <div class="jumbotron">
-                {% block heading %}
                 <h2>{% block page %}{% endblock %} - University Events</h2>
-                {% endblock %}
                 <br>
                 {% block content %}{% endblock %}
             </div>
             
             {{flash_msg()}}
-
+    
             <div class="footer">
             <p>&copy; Company 2015</p>
             </div>
-        </div>
-
     </div>
 </body>
 </html>
