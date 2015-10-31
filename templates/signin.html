@@ -6,10 +6,10 @@
 {% block page %}Sign In{% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="/validateLogin" method="post">
+    <form class="form-signin" action="/validateSignIn" method="post">
 
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" value="{{request.form.inputEmail}}" required autofocus>
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>

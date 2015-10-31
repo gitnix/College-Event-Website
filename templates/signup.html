@@ -9,16 +9,16 @@
     <form class="form-signin" action="/validateSignUp" method="post">
 
         <label for="inputFirstName" class="sr-only">First Name</label>
-        <input type="name" name="inputFirstName" id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
+        <input type="name" name="inputFirstName" id="inputFirstName" class="form-control" placeholder="First Name" value="{{request.form.inputFirstName}}" required autofocus>
 
         <label for="inputLastName" class="sr-only">Last Name</label>
-        <input type="name" name="inputLastName" id="inputLastName" class="form-control" placeholder="Last Name" required>
+        <input type="name" name="inputLastName" id="inputLastName" class="form-control" placeholder="Last Name" value= "{{request.form.inputLastName}}" required>
 
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" value= "{{request.form.inputEmail}}"  required>
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" value= "{{request.form.inputPassword}}"  required>
          
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         

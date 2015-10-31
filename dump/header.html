@@ -1,17 +1,11 @@
 {% from "macros.html" import nav_link with context %}
-{% from "macros.html" import flash_msg with context %}
-
-<!DOCTYPE html>
-<html>
 
 <head>
     <title>University Events</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css">
     <link rel="stylesheet" href="../static/css/signup.css">
-
     <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -26,25 +20,3 @@
             </nav>
             <h3 clss="text-muted">University Event Finder</h3>
         </div>
-
-        <!-- remove wrapper div if goes unused -->
-        <div class="wrapper">      
-
-            <div class="jumbotron">
-                {% block heading %}
-                <h2>{% block page %}{% endblock %} - University Events</h2>
-                {% endblock %}
-                <br>
-                {% block content %}{% endblock %}
-            </div>
-            
-            {{flash_msg()}}
-
-            <div class="footer">
-            <p>&copy; Company 2015</p>
-            </div>
-        </div>
-
-    </div>
-</body>
-</html>

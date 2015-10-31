@@ -5,3 +5,17 @@
   <li><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
 {% endif %}
 {% endmacro %}
+
+{% macro flash_msg() %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashyo">
+        {% for message in messages %}
+            <li class="alert alert-warning flash"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Warning!</strong> {{message}}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+{% endmacro %}        

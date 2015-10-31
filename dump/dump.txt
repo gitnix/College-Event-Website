@@ -1,0 +1,7 @@
+All the Files in this folder can be ignored
+They are not used in the application and are just for various testing
+
+
+This file itself is just a file to copy/paste things into for a temporary time 
+
+
