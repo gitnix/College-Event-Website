@@ -20,17 +20,19 @@
         {% block header %} {% include 'header_signup.html' %} {% endblock %}
         </div>    
 
-            <div class="jumbotron">
-                <h2>{% block page %}{% endblock %} - University Events</h2>
-                <br>
-                {% block content %}{% endblock %}
-            </div>
-            
-            {{flash_msg()}}
-    
-            <div class="footer">
-            <p>&copy; Company 2015</p>
-            </div>
+        <div class="jumbotron">
+            <h2>{% block page %}{% endblock %} - University Events</h2>
+            <br>
+            {% block content %}{% endblock %}
+                <div class='flash_containter'>
+                {{flash_msg()}}
+                </div>
+        </div>
+        
+        
+        <div class="footer">
+        <p>&copy; Company 2015</p>
+        </div>
     </div>
 </body>
 </html>

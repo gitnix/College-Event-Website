@@ -82,10 +82,43 @@ def validate_signup():
 
         if len(data) is 0:
             conn.commit()
-            return redirect('/userhome')
+            return render_template('signin.html', create=True)
         else:
             flash("That Email is already registered")
         return render_template('/signup.html')
+
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/eventmaker')
+def create_event():
+    return render_template('eventmaker.html')
+
+@app.route('/validate_event', methods=['POST'])
+def validate_event():
+    try:
+        _eventName = request.form['eventName']
+        _eventType = request.form['eventType']
+        _eventDescription = request.form['eventDescription']
+        _eventEmail = request.form['eventEmail']
+        _eventPhone = request.form['eventPhone']
+
+        #let's call MySQL
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone))
+        data = cursor.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+            flash("The event has been created.", 'alert-success')
+            return render_template('userhome.html')
+        else:
+            flash("That event is already set up!", 'alert-warning')
+        return render_template('eventmaker.html')
 
     except Exception as err:
         return json.dumps({'Exception error':str(err)})

@@ -44,3 +44,41 @@ BEGIN
     select * from users where user_email = p_email;
 END$$
 DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_event`(
+    IN p_eventName VARCHAR(255),
+    IN p_eventType VARCHAR(45),
+    IN p_eventDescription VARCHAR(255),
+    IN p_eventEmail VARCHAR(255),
+    IN p_eventPhone VARCHAR(255)
+)
+BEGIN
+    if ( select exists (select 1 from events where event_email = p_eventEmail) ) THEN
+     
+        select 'Event Exists !!';
+     
+    ELSE
+     
+        insert into events
+        (
+            event_name,
+            event_type,
+            event_description,
+            event_email,
+            event_phone
+        )
+        values
+        (
+            p_eventName,
+            p_eventType,
+            p_eventDescription,
+            p_eventEmail,
+            p_eventPhone
+        );
+     
+    END IF;
+END$$
+DELIMITER ;

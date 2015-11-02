@@ -5,6 +5,7 @@ CREATE TABLE `users` (
  `user_id` int(8) NOT NULL AUTO_INCREMENT,
  `user_email` varchar(255) NOT NULL,
  `user_password` varchar(255) NOT NULL,
+ `user_role` varchar(20) NOT NULL DEFAULT 'student',
  `user_firstname` varchar(45) NOT NULL,
  `user_lastname` varchar(45) NOT NULL,
  PRIMARY KEY (`user_id`),

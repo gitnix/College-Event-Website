@@ -7,12 +7,12 @@
 {% endmacro %}
 
 {% macro flash_msg() %}
-{% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <ul class="flash">
-        {% for message in messages %}
-            <li class="alert alert-warning flash"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Warning!</strong> {{message}}
+        {% for category, message in messages %}
+            <li class="alert {{category}} flash"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{message}}</strong> 
             </li>
         {% endfor %}
         </ul>
