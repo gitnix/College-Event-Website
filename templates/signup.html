@@ -6,7 +6,7 @@
 {% block page %}Sign Up{% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="/validateSignUp" method="post">
+    <form class="form-signin" action="/validate_signup" method="post">
 
         <label for="inputFirstName" class="sr-only">First Name</label>
         <input type="name" name="inputFirstName" id="inputFirstName" class="form-control" placeholder="First Name" value="{{request.form.inputFirstName}}" required autofocus>

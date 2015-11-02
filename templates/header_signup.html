@@ -1,0 +1,11 @@
+{% from "macros.html" import nav_link with context %}            
+
+            <nav>
+                <ul class="nav nav-pills pull-right">
+
+                    {{ nav_link('main', 'Home') }}
+                    {{ nav_link('signin', 'Sign In') }}
+                    {{ nav_link('signup', 'Sign Up') }}
+                </ul>
+            </nav>
+            <h3 clss="text-muted">University Event Finder</h3>

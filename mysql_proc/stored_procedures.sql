@@ -2,7 +2,7 @@
 
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_createUser`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_user`(
     IN p_firstname VARCHAR(45),
     IN p_lastname VARCHAR(45),
     IN p_email VARCHAR(255),
@@ -37,7 +37,7 @@ DELIMITER ;
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateSignIn`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validate_signin`(
     IN p_email VARCHAR(255)
 )
 BEGIN

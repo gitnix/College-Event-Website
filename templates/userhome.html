@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
-{% block heading %}
-    {{ super() }}
-{% endblock %}
-{% block page %}Dashboard{% endblock %}
+{% block header %} {% include 'header_home.html' %} {% endblock %}
+
+{% block page %}EventList{% endblock %}
 
 {% block content %}
     <p>Events located here</p>
+    
 {% endblock %}

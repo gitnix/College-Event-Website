@@ -8,7 +8,7 @@ CREATE TABLE `users` (
  `user_firstname` varchar(45) NOT NULL,
  `user_lastname` varchar(45) NOT NULL,
  PRIMARY KEY (`user_id`),
- UNIQUE KEY `email` (`user_email`)
+ UNIQUE KEY(`user_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `universities` (
@@ -17,7 +17,18 @@ CREATE TABLE `universities` (
  `university_domain` varchar(45) NOT NULL,
  `university_location` varchar(255) NOT NULL,
  PRIMARY KEY (`university_id`),
- UNIQUE KEY `university_name` (`university_name`,`university_domain`,`university_location`)
+ UNIQUE KEY(`university_name`,`university_domain`,`university_location`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `events` (
+ `event_id` int(8) NOT NULL AUTO_INCREMENT,
+ `event_name` varchar(255) NOT NULL,
+ `event_type` varchar(45) NOT NULL,
+ `event_description` varchar(255) NOT NULL,
+ `event_email` varchar(255) NOT NULL,
+ `event_phone` varchar(255) NOT NULL,
+ PRIMARY KEY (`event_id`),
+ UNIQUE KEY(`event_id`,`event_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_associates_university` (
