@@ -39,12 +39,23 @@ body {
     padding: 20px;
 }
 
+.white{
+    color: white;   
+}
+
 @media (min-width: 768px) {
   .container {
     max-width: 900px;
   }
 }
 
+/*navbar-nav.li{
+    color:blue;
+}
+
+nav.navbar{
+    background: rgba(238, 230, 238, 0.9); 
+}*/
 
  /**/
 

@@ -1,11 +1,5 @@
 {% from "macros.html" import nav_link with context %}
 
-            <nav>
-                <ul class="nav nav-pills pull-right">
-
-                    {{ nav_link('main', 'Home','fa fa-home') }}
-                    {{ nav_link('signin', 'Sign In', 'fa fa-arrow-right') }}
-                    {{ nav_link('signup', 'Sign Up', 'fa fa-angle-up') }}
-                </ul>
-            </nav>
-            <h3 clss="text-muted">University Event Finder</h3>
+{{ nav_link('main', 'Home','fa fa-home') }}
+{{ nav_link('signin', 'Sign In', 'fa fa-sign-in') }}
+{{ nav_link('signup', 'Sign Up', 'fa fa-external-link-square') }}
