@@ -1,7 +1,5 @@
-# university_event_site
-project for class
+#College Event Site
 
-Using Apache2 and MySQL
-and Flask
+Apache2, MySQL, Flask
 
---Change the MySQL configurations to fit your configuration
+--Change the MySQL configurations to fit your environment

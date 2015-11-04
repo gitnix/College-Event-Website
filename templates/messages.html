@@ -2,14 +2,14 @@
 
 {% block header %} {% include 'header_home.html' %} {% endblock %}
 
-{% block page %}EventList{% endblock %}
+{% block page %}Messages{% endblock %}
 
 {% block content %}
-    <p>Events located here</p>
-    {% for event in events %}
+    <p>Messages shown here</p>
+    {% for message in messages %}
 
         <a href="#" class="list-group-item active">
-        <li>{{event}}
+        <li>{{message}}
         </li>
         </a>    
     {% endfor %}

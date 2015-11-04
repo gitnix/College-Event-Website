@@ -16,6 +16,8 @@ mysql.init_app(app)
 
 @app.route('/')
 def main():
+    if session.get('user'):
+        return redirect('/userhome')
     return render_template('index.html')
 
 #use the def name when calling the route through code
@@ -26,12 +28,45 @@ def signup():
 
 @app.route('/signin')
 def signin():
+    if session.get('user'):
+        return render_template('userhome')
     return render_template('signin.html')
 
 @app.route('/userhome')
 def userhome():
     if session.get('user'):
-        return render_template('userhome.html')
+        _event = session.get('eventviewtype')
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_get_events_by_type', (_event, ))
+        events = cursor.fetchall()
+
+        events_dict = []
+        for event in events:
+            event_dict = {
+                '1_Id': event[0],
+                'aTitle': event[1],
+                'bDescription': event[2],
+                '4_Date': event[4]
+            }
+            events_dict.append(event_dict)
+
+        return render_template('userhome.html', events = events_dict)
+    else:
+        return render_template('error.html', error="You must be logged in to access this page.")
+
+@app.route('/messages')
+def messages():
+    if session.get('user'):
+        _user = session.get('user')
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_get_messages_by_user', (_user, ))
+        messagelist = cursor.fetchall()
+
+        return render_template('messages.html', messages = messagelist)
     else:
         return render_template('error.html', error="You must be logged in to access this page.")
 
@@ -52,6 +87,7 @@ def validate_signin():
             #currently password is located as the 3rd column in users table
             if check_password_hash(str(data[0][2]), _password):
                 session['user'] = data[0][0]
+                session['eventviewtype'] = 'd'
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
@@ -82,7 +118,8 @@ def validate_signup():
 
         if len(data) is 0:
             conn.commit()
-            return render_template('signin.html', create=True)
+            flash("Account Created!", 'alert-success')
+            return render_template('signin.html')
         else:
             flash("That Email is already registered")
         return render_template('/signup.html')
@@ -115,7 +152,8 @@ def validate_event():
         if len(data) is 0:
             conn.commit()
             flash("The event has been created.", 'alert-success')
-            return render_template('userhome.html')
+            # return render_template('userhome.html')
+            return redirect('/userhome')
         else:
             flash("That event is already set up!", 'alert-warning')
         return render_template('eventmaker.html')

@@ -1,10 +1,11 @@
-{% macro nav_link(endpoint, name) %}
+{% macro nav_link(endpoint, name, icon) %}
 {% if request.endpoint.endswith(endpoint) %}
-  <li class="active"><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
+  <li class="active"><a href="{{ url_for(endpoint) }}"><i class="{{icon}}"></i>&nbsp;{{name}}</a></li>
 {% else %}
-  <li><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
+  <li><a href="{{ url_for(endpoint) }}"><i class="{{icon}}"></i>&nbsp;{{name}}</a></li>
 {% endif %}
 {% endmacro %}
+
 
 {% macro flash_msg() %}
 {% with messages = get_flashed_messages(with_categories=true) %}

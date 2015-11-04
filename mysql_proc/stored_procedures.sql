@@ -82,3 +82,37 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_events_by_type` (
+IN p_event_type VARCHAR(45)
+)
+BEGIN
+    select * from events where event_type = p_event_type;
+END$$
+ 
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_messages_by_user` (
+IN p_user_id int(8)
+)
+BEGIN
+    select 
+    m.message_content, 
+    m.creation_time,
+    u.user_email,
+    u.user_firstname,
+    u.user_lastname
+    from messages m 
+    inner join users u on u.user_id = m.user_id
+    where
+    m.user_id = 2;
+END$$
+DELIMITER ;
+
+
+

@@ -40,3 +40,13 @@ CREATE TABLE `user_associates_university` (
  CONSTRAINT `user_associates_university_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT `user_associates_university_ibfk_2` FOREIGN KEY (`university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `messages` (
+ `message_id` int(8) NOT NULL AUTO_INCREMENT,
+ `message_content` VARCHAR(255),
+ `user_id` int(8) NOT NULL,
+ `creation_time` datetime NOT NULL,
+ PRIMARY KEY (`message_id`),
+ KEY `user_id` (`user_id`),
+ CONSTRAINT `message_from_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
