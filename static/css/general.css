@@ -1,0 +1,67 @@
+body {
+  /*padding-top: 40px;*/
+  /*padding-bottom: 40px;*/
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: url("../img/UCF_background.jpg") no-repeat center center fixed; 
+  background-size: cover;
+}
+
+.containter{
+}
+
+.footer{
+    /*width:73%;*/
+    bottom:10px;
+    color:yellow;
+    /*left:0;*/;
+    padding-top:8px;
+}
+
+.jumbotron{
+    background: rgba(238, 230, 238, 0.9); 
+    /*padding-bottom: 100px;*/
+    flex:1;
+}
+
+.flash.li{
+    left: 0;
+}
+
+.flash_containter{
+    /*footer height + padding - padding of page i used 5 in this case cause i don't know real number*/
+    /*margin-bottom: 45px; */
+    
+}
+
+.error-image{
+    padding: 20px;
+}
+
+.white{
+    color: white;   
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+.list-group-item{
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px;
+}
+
+
+/*navbar-nav.li{
+    color:blue;
+}
+
+nav.navbar{
+    background: rgba(238, 230, 238, 0.9); 
+}*/
+
+ /**/

@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, redirect, session, \
     flash, url_for
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
+import collections
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -42,17 +43,14 @@ def userhome():
         cursor.callproc('sp_get_events_by_type', (_event, ))
         events = cursor.fetchall()
 
-        events_dict = []
+        events_list = []
         for event in events:
-            event_dict = {
-                '1_Id': event[0],
-                'aTitle': event[1],
-                'bDescription': event[2],
-                '4_Date': event[4]
-            }
-            events_dict.append(event_dict)
+            event_item = [
+                event[1], event[3]
+            ]
+            events_list.append(event_item)
 
-        return render_template('userhome.html', events = events_dict)
+        return render_template('userhome.html', events = events_list)
     else:
         return render_template('error.html', error="You must be logged in to access this page.")
 

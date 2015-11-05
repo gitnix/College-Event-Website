@@ -6,11 +6,21 @@
 
 {% block content %}
     <p>Events located here</p>
-    {% for event in events %}
 
-        <a href="#" class="list-group-item active">
-        <li>{{event}}
+
+    <ul class ='list-group'>
+            
+        {% for event_item in events %}
+        <a href="#" class="list-group-item">
+        <li>
+
+        <h2 class="list-group-item-heading">{{event_item[0]}}</h4>
+
+        <p class="list-group-item-text">{{event_item[1]}}</p>
         </li>
-        </a>    
-    {% endfor %}
+       
+        </a>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
