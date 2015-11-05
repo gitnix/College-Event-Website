@@ -114,5 +114,17 @@ BEGIN
 END$$
 DELIMITER ;
 
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_event` (
+IN p_event_id int(8)
+)
+BEGIN
+    select * from events where event_id = p_event_id;
+END$$
+ 
+DELIMITER ;
+
 
 

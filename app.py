@@ -2,7 +2,7 @@ from flask import Flask, render_template, json, request, redirect, session, \
     flash, url_for
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
-import collections
+import logging
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -35,38 +35,76 @@ def signin():
 
 @app.route('/userhome')
 def userhome():
-    if session.get('user'):
-        _event = session.get('eventviewtype')
+    try:
+        if session.get('user'):
+            _event = session.get('eventviewtype')
 
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.callproc('sp_get_events_by_type', (_event, ))
-        events = cursor.fetchall()
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.callproc('sp_get_events_by_type', (_event, ))
+            events = cursor.fetchall()
 
-        events_list = []
-        for event in events:
-            event_item = [
-                event[1], event[3]
-            ]
-            events_list.append(event_item)
+            events_list = []
+            for event in events:
+                event_item = [
+                    event[1], event[3], event[0]
+                ]
+                events_list.append(event_item)
 
-        return render_template('userhome.html', events = events_list)
-    else:
-        return render_template('error.html', error="You must be logged in to access this page.")
+            return render_template('userhome.html', events = events_list)
+        else:
+            return render_template('error.html', error="You must be logged in to access this page.")
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/event/<eventid>')
+def show_event_profile(eventid):
+    # show the event profile for that event
+    try:    
+        if session.get('user'):
+            # _event_id = eventid
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.callproc('sp_get_event', (eventid, ))
+            eventdata = cursor.fetchall()
+
+            for eventinfo in eventdata:
+                #in order it is:
+                #Name, Description, Email, Phone
+                event_data = [
+                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5]
+                ]
+
+        return render_template('event.html', eventinfo = event_data)
+
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/messages')
 def messages():
-    if session.get('user'):
-        _user = session.get('user')
+    try:
+        if session.get('user'):
+            _user = session.get('user')
 
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.callproc('sp_get_messages_by_user', (_user, ))
-        messagelist = cursor.fetchall()
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.callproc('sp_get_messages_by_user', (_user, ))
+            messagelist = cursor.fetchall()
 
-        return render_template('messages.html', messages = messagelist)
-    else:
-        return render_template('error.html', error="You must be logged in to access this page.")
+            return render_template('messages.html', messages = messagelist)
+        else:
+            return render_template('error.html', error="You must be logged in to access this page.")
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/validate_signin', methods=['POST'])
 def validate_signin():
@@ -85,7 +123,7 @@ def validate_signin():
             #currently password is located as the 3rd column in users table
             if check_password_hash(str(data[0][2]), _password):
                 session['user'] = data[0][0]
-                session['eventviewtype'] = 'd'
+                session['eventviewtype'] = 'public'
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block page %}Event Profile{% endblock %}
+
+{% block content %}
+    <h2>{{eventinfo[0]}}</h2>
+    <p>{{eventinfo[1]}}</p>
+   <div class="well">
+       <p>{{eventinfo[2]}}</p>
+       <p>{{eventinfo[3]}}</p>
+   </div>
+{% endblock %}

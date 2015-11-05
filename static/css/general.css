@@ -52,7 +52,13 @@ body {
 .list-group-item{
     margin-left: 5%;
     margin-right: 5%;
-    border-radius: 10px;
+    border-radius: 25px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #7c6751;
+    border-color: #564738;
 }
 
 
