@@ -8,6 +8,8 @@ bootstrap navbar background
 http://work.smarchal.com/twbscolor/css/7c6751564738e7f4e99d98981
 
 
+value= "{{request.form.eventPhone}}"
+
 <!--                 <div class= "header">
                     {% block header %} {% include 'header_signup.html' %} {% endblock %}
                 </div>    -->   

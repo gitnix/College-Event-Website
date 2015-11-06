@@ -30,7 +30,7 @@ def signup():
 @app.route('/signin')
 def signin():
     if session.get('user'):
-        return render_template('userhome')
+        return render_template('userhome.htmll')
     return render_template('signin.html')
 
 @app.route('/userhome')
@@ -51,21 +51,22 @@ def userhome():
                 ]
                 events_list.append(event_item)
 
+            cursor.close()
+            conn.close()
+
             return render_template('userhome.html', events = events_list)
         else:
             return render_template('error.html', error="You must be logged in to access this page.")
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
-    finally:
-        cursor.close()
-        conn.close()
+
 
 @app.route('/event/<eventid>')
 def show_event_profile(eventid):
     # show the event profile for that event
     try:    
         if session.get('user'):
-            # _event_id = eventid
+            # _event_id = eventid   
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_event', (eventid, ))
@@ -78,13 +79,16 @@ def show_event_profile(eventid):
                     eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5]
                 ]
 
-        return render_template('event.html', eventinfo = event_data)
+                cursor.close()
+                conn.close()
+
+            return render_template('event.html', eventinfo = event_data)
+        else:
+            return render_template('error.html', error="You must be logged in to access this page.")
 
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
-    finally:
-        cursor.close()
-        conn.close()
+        
 
 @app.route('/messages')
 def messages():
@@ -97,14 +101,15 @@ def messages():
             cursor.callproc('sp_get_messages_by_user', (_user, ))
             messagelist = cursor.fetchall()
 
+            cursor.close()
+            conn.close()
+
             return render_template('messages.html', messages = messagelist)
         else:
             return render_template('error.html', error="You must be logged in to access this page.")
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
-    finally:
-        cursor.close()
-        conn.close()
+        
 
 @app.route('/validate_signin', methods=['POST'])
 def validate_signin():
@@ -168,7 +173,11 @@ def validate_signup():
 
 @app.route('/eventmaker')
 def create_event():
-    return render_template('eventmaker.html')
+    if session.get('user'):
+        return render_template('eventmaker.html')
+    else:
+        return render_template('error.html', error="You must be logged in to access this page.")
+
 
 @app.route('/validate_event', methods=['POST'])
 def validate_event():
@@ -204,6 +213,10 @@ def validate_event():
 def signout():
     session.pop('user', None)
     return redirect('/')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html', error="We're sorry. We could not find the requested page.")
 
 
 if __name__ == '__main__':

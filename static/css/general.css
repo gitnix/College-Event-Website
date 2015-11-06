@@ -61,7 +61,17 @@ body {
     border-color: #564738;
 }
 
+.btn-success{
+    background-color: #633626;
+    border-color: #552D20;
+    color: #fff;
+}
 
+.well-sm {
+    padding: 0px;
+    border-radius: 3px;
+    margin: 0px auto;
+}
 /*navbar-nav.li{
     color:blue;
 }

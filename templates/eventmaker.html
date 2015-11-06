@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+{% block extra_css_js %}
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
+<script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
+<script src="../static/js/bootstrap-formhelpers-phone.js"></script>
+{% endblock %}
+
+
 {% block header %} {% include 'header_home.html' %} {% endblock %}
 
 {% block page %}Create Event{% endblock %}
@@ -17,10 +24,10 @@
         <input type="name" name="eventDescription" id="eventDescription" class="form-control" placeholder="Event Description" value= "{{request.form.eventDescription}}"  required>
 
         <label for="eventEmail" class="sr-only">Event Email</label>
-        <input type="email" name="eventEmail" id="eventEmail" class="form-control" placeholder="Event@University.com" value= "{{request.form.eventEmail}}"  required>
+        <input type="email" name="eventEmail" id="eventEmail" class="form-control" placeholder="Event@University.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" value= "{{request.form.eventEmail}}"  required>
          
         <label for="eventPhone" class="sr-only">Event Phone</label>
-        <input type="phone" name="eventPhone" id="eventPhone" class="form-control" placeholder="123-456-7899" value= "{{request.form.eventPhone}}"  required>
+        <input type="text" name="eventPhone" id="eventPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.eventPhone}}" required>
 
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Create Event</button>
         

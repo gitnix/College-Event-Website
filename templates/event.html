@@ -1,12 +1,15 @@
 {% extends "layout.html" %}
 
+{% block header %} {% include 'header_home.html' %} {% endblock %}
+
 {% block page %}Event Profile{% endblock %}
 
 {% block content %}
-    <h2>{{eventinfo[0]}}</h2>
+    <h1>{{eventinfo[0]}}</h1>
     <p>{{eventinfo[1]}}</p>
-   <div class="well">
-       <p>{{eventinfo[2]}}</p>
+   <div class="well well-sm">
+        <h3>Contact</h3>
+        <p>{{eventinfo[2]}}</p>
        <p>{{eventinfo[3]}}</p>
    </div>
 {% endblock %}
