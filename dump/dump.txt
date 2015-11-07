@@ -13,3 +13,71 @@ value= "{{request.form.eventPhone}}"
 <!--                 <div class= "header">
                     {% block header %} {% include 'header_signup.html' %} {% endblock %}
                 </div>    -->   
+
+
+
+
+<!--         {% for k, v in event.iteritems() %}
+            {% if k in event %}
+                <option value="{{ k }}" selected="">{{ v }}</option> 
+            {% else %}
+                <option value="{{ k }}">{{ v }}</option>
+            {% endif %}
+        {% endfor %} -->
+
+
+
+
+               <!--  {% for k,v in messages.items() %}
+                <option>{{ v }}</option>
+        {% endfor %} -->
+
+
+
+
+         <p>select2 select box:</p>
+  <p>
+    <select id="select2" style="width:300px">
+
+
+                {% for k, v in messages.items() %}
+                <option>{{ v }}</option>
+        {% endfor %}
+    </select>
+  </p>
+
+
+
+
+
+{% block extra_css_js %}
+<link rel="stylesheet" href="../static/css/select2.css">
+
+<script src="../static/js/select2.js"></script>
+
+<script>
+    $(function(){
+      // turn the element to select2 select style
+      $('#select2').select2();
+    });
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+          <div class="row">
+       <div class="span4 collapse-group">
+          <h2>Heading</h2>
+           <p class="collapse" id="viewdetails">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" data-toggle="collapse" data-target="#viewdetails">View details &raquo;</a></p>
+        </div>
+      </div>

@@ -102,18 +102,23 @@ CREATE PROCEDURE `sp_get_messages_by_user` (
 IN p_user_id int(8)
 )
 BEGIN
-    select 
+    select
+    m.message_header,
     m.message_content, 
     m.creation_time,
-    u.user_email,
-    u.user_firstname,
-    u.user_lastname
+    receiver.user_email,
+    receiver.user_firstname,
+    receiver.user_lastname,
+    sender.user_email,
+    sender.user_firstname,
+    sender.user_lastname
     from messages m 
-    inner join users u on u.user_id = m.user_id
+    inner join users receiver on receiver.user_id = m.to_user_id
+    inner join users sender on sender.user_id = m.from_user_id
     where
-    m.user_id = 2;
+    m.to_user_id = p_user_id;
 END$$
-DELIMITER ;
+DELIMITER ;;
 
 ----------------------------------------------------------------------------------------
 
@@ -126,6 +131,4 @@ BEGIN
 END$$
  
 DELIMITER ;
-
-
 

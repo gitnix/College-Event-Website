@@ -43,10 +43,14 @@ CREATE TABLE `user_associates_university` (
 
 CREATE TABLE `messages` (
  `message_id` int(8) NOT NULL AUTO_INCREMENT,
- `message_content` VARCHAR(255),
- `user_id` int(8) NOT NULL,
+ `message_header` VARCHAR(45) NOT NULL,
+ `message_content` VARCHAR(255) NOT NULL,
+ `to_user_id` int(8) NOT NULL,
+ `from_user_id` int(8) NOT NULL,
  `creation_time` datetime NOT NULL,
  PRIMARY KEY (`message_id`),
- KEY `user_id` (`user_id`),
- CONSTRAINT `message_from_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+ KEY `to_user_id` (`to_user_id`),
+ KEY `from_user_id` (`from_user_id`),
+ CONSTRAINT `message_recipient` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `message_sender` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

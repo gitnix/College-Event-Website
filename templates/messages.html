@@ -1,16 +1,42 @@
 {% extends "layout.html" %}
 
+
 {% block header %} {% include 'header_home.html' %} {% endblock %}
 
 {% block page %}Messages{% endblock %}
 
 {% block content %}
-    <p>Messages shown here</p>
-    {% for message in messages %}
+    
+    <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" href="/createmessage">Create New Message</button>
+    
 
-        <a href="#" class="list-group-item active">
-        <li>{{message}}
+
+
+    <ul class ='list-group'>
+            
+        {% for message_item in messages_data %}
+        
+       <a class="btn list-group-item" data-toggle="collapse" data-target="#viewdetails">
+
+        <li>
+        
+        
+        <h2 class="list-group-item-heading">
+        {{message_item[0]}} 
+        <div class="align-right">&raquo;</div>
+        </h2>
+
+        <p class="list-group-item-text collapse" id="viewdetails">{{message_item[1]}}</p>
+        
         </li>
-        </a>    
-    {% endfor %}
+        </a>
+        {% endfor %}
+    </ul>
+
+
+
+ 
+
+
+
 {% endblock %}

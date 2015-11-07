@@ -30,7 +30,7 @@ def signup():
 @app.route('/signin')
 def signin():
     if session.get('user'):
-        return render_template('userhome.htmll')
+        return render_template('userhome.html')
     return render_template('signin.html')
 
 @app.route('/userhome')
@@ -60,7 +60,6 @@ def userhome():
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
 
-
 @app.route('/event/<eventid>')
 def show_event_profile(eventid):
     # show the event profile for that event
@@ -89,7 +88,6 @@ def show_event_profile(eventid):
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
         
-
 @app.route('/messages')
 def messages():
     try:
@@ -99,17 +97,43 @@ def messages():
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_messages_by_user', (_user, ))
-            messagelist = cursor.fetchall()
+            
+            # message_data = cursor.fetchall()
+
+            # messages_dict = []
+            # for message in message_data:
+            #     message_dict = {
+            #         'Header': message[0],
+            #         'Content': message[1]
+            #     }
+            #     messages_dict.append(message_dict)
+
+
+
+
+
+            message_list = cursor.fetchall()
+            logging.warning(message_list)
+            messages_to_insert = []
+            for message in message_list:
+                message_item = [
+                    message[0], message[1], message[2]
+                ]
+                messages_to_insert.append(message_item)
+            logging.warning(messages_to_insert)
 
             cursor.close()
             conn.close()
 
-            return render_template('messages.html', messages = messagelist)
+            return render_template('messages.html', messages_data = messages_to_insert)
         else:
             return render_template('error.html', error="You must be logged in to access this page.")
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
-        
+    
+@app.route('/createmessage')
+def create_message():
+    return render_template('messagemaker.html')
 
 @app.route('/validate_signin', methods=['POST'])
 def validate_signin():
@@ -177,7 +201,6 @@ def create_event():
         return render_template('eventmaker.html')
     else:
         return render_template('error.html', error="You must be logged in to access this page.")
-
 
 @app.route('/validate_event', methods=['POST'])
 def validate_event():
