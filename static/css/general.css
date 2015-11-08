@@ -101,7 +101,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 
-#togglearrow{
+.togglearrow{
     display: inline;
 
     /*text-align: right;*/
@@ -109,6 +109,12 @@ h1,h2,h3,h4,h5,h6{
     /*clear: both;*/
     position: absolute;
     right: 20px;
+}
+
+.closemessage{
+    display: inline;
+    position: absolute;
+    left: 20px;
 }
 
 

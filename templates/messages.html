@@ -4,8 +4,9 @@
 
     <script>
     $(document).ready(function() {
-      $("#togglecontent").click(function () {
-        $("#togglearrow").toggleClass("fa-caret-right  fa-caret-down");
+      $(".messageItem").click(function () {
+        $(this).find('.togglearrow').toggleClass("fa-caret-right  fa-caret-down");
+        $(this).find('p').toggleClass("in");  //collapse class alone hides data and in class shows it
       });
     });
     </script>
@@ -22,24 +23,21 @@
     <br>
     <br>
     
-
     <ul class ='list-group'>
             
         {% for message_item in messages_data %}
         
-        <a class="btn list-group-item" data-toggle="collapse" data-target="#viewdetails" id="togglecontent">
-            <li>
-            <h2 class="list-group-item-heading">
-            {{message_item[0]}} 
-            <div id="togglearrow" class="fa fa-caret-right"></div>
-            </h2>
-            <p class="list-group-item-text collapse" id="viewdetails">{{message_item[1]}}</p>
+        <a class="btn list-group-item">
+            <li class="messageItem">
+                <h2 class="list-group-item-heading">
+                    {{message_item[0]}} 
+                    <div class="togglearrow fa fa-caret-right"></div>
+                    <div class="closemessage fa fa-times-circle"></div>
+                </h2>
+                <p class="list-group-item-text collapse">{{message_item[1]}}</p>
             </li>
         </a>
         {% endfor %}
     </ul>
 
 {% endblock %}
-
-
-<!-- make it to where the arrow changes to a down arrow on expand -->
