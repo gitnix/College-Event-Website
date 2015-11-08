@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
 
+{% block extra_css_js %}
+
+    <script>
+    $(document).ready(function() {
+      $("#togglecontent").click(function () {
+        $("#togglearrow").toggleClass("fa-caret-right  fa-caret-down");
+      });
+    });
+    </script>
+
+{% endblock %}
 
 {% block header %} {% include 'header_home.html' %} {% endblock %}
 
@@ -7,36 +18,28 @@
 
 {% block content %}
     
-    <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" href="/createmessage">Create New Message</button>
+    <button id="btnSignUp" class="btn btn-primary" href="/createmessage">Create New Message</button>
+    <br>
+    <br>
     
-
-
 
     <ul class ='list-group'>
             
         {% for message_item in messages_data %}
         
-       <a class="btn list-group-item" data-toggle="collapse" data-target="#viewdetails">
-
-        <li>
-        
-        
-        <h2 class="list-group-item-heading">
-        {{message_item[0]}} 
-        <div class="align-right">&raquo;</div>
-        </h2>
-
-        <p class="list-group-item-text collapse" id="viewdetails">{{message_item[1]}}</p>
-        
-        </li>
+        <a class="btn list-group-item" data-toggle="collapse" data-target="#viewdetails" id="togglecontent">
+            <li>
+            <h2 class="list-group-item-heading">
+            {{message_item[0]}} 
+            <div id="togglearrow" class="fa fa-caret-right"></div>
+            </h2>
+            <p class="list-group-item-text collapse" id="viewdetails">{{message_item[1]}}</p>
+            </li>
         </a>
         {% endfor %}
     </ul>
 
-
-
- 
-
-
-
 {% endblock %}
+
+
+<!-- make it to where the arrow changes to a down arrow on expand -->

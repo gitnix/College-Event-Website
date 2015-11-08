@@ -101,15 +101,14 @@ h1,h2,h3,h4,h5,h6{
 }
 
 
-.align-right{
-    float: right;
-    /*text-align: right;*/
-    /*display: inline;*/
-}
+#togglearrow{
+    display: inline;
 
-/*to fix allignment of content when that float is on the right for the arrow*/
-p.collapse.in{
-    padding-right: 12px;
+    /*text-align: right;*/
+    /*float: right;*/
+    /*clear: both;*/
+    position: absolute;
+    right: 20px;
 }
 
 
