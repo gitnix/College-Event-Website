@@ -220,17 +220,18 @@ def validate_event():
         if len(data) is 0:
             conn.commit()
             flash("The event has been created.", 'alert-success')
+            cursor.close()
+            conn.close()
             # return render_template('userhome.html')
             return redirect('/userhome')
         else:
             flash("That event is already set up!", 'alert-warning')
+            cursor.close()
+            conn.close()
         return render_template('eventmaker.html')
 
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
-    finally:
-        cursor.close()
-        conn.close()
 
 @app.route('/signout')
 def signout():

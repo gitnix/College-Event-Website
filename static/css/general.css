@@ -117,6 +117,9 @@ h1,h2,h3,h4,h5,h6{
     left: 20px;
 }
 
+.radiobuffer{
+    margin: 20px;
+}
 
 /*navbar-nav.li{
     color:blue;

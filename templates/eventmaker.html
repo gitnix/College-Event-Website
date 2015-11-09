@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+    {% extends "layout.html" %}
 
 {% block extra_css_js %}
 <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
@@ -13,12 +13,9 @@
 
 {% block content %}
     <form class="form-signin" action="/validate_event" method="post">
-
+        
         <label for="eventName" class="sr-only">Event Name</label>
         <input type="name" name="eventName" id="eventName" class="form-control" placeholder="Event Name" value="{{request.form.eventName}}" required autofocus>
-
-        <label for="eventType" class="sr-only">Event Type</label>
-        <input type="name" name="eventType" id="eventType" class="form-control" placeholder="Event Type" value= "{{request.form.eventType}}" required>
 
         <label for="eventDescription" class="sr-only">Event Description</label>
         <input type="name" name="eventDescription" id="eventDescription" class="form-control" placeholder="Event Description" value= "{{request.form.eventDescription}}"  required>
@@ -28,6 +25,15 @@
          
         <label for="eventPhone" class="sr-only">Event Phone</label>
         <input type="text" name="eventPhone" id="eventPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.eventPhone}}" required>
+        
+        <div class="radiobuffer">
+            <label class="radio-inline">
+                <input type="radio" name="eventType" value='public' checked >Public
+            </label>   
+            <label class="radio-inline">
+                <input type="radio" name="eventType" value='private'>Private
+            </label> 
+        </div>  
 
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Create Event</button>
         
