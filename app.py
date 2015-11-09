@@ -93,7 +93,6 @@ def messages():
     try:
         if session.get('user'):
             _user = session.get('user')
-
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_messages_by_user', (_user, ))
@@ -108,16 +107,14 @@ def messages():
             #     }
             #     messages_dict.append(message_dict)
 
-
-
-
-
             message_list = cursor.fetchall()
             logging.warning(message_list)
             messages_to_insert = []
             for message in message_list:
                 message_item = [
-                    message[0], message[1], message[2]
+                    # the order of these is determined by the select sql in the stored procedure
+                    # message_id, header, content, recepient id
+                    message[0], message[1], message[2], message[4]
                 ]
                 messages_to_insert.append(message_item)
             logging.warning(messages_to_insert)
@@ -134,6 +131,31 @@ def messages():
 @app.route('/createmessage')
 def create_message():
     return render_template('messagemaker.html')
+
+@app.route('/deletemessage/<messageid>')
+def delete_message(messageid):
+    if session.get('user'):
+        _userid = session.get('user')
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_delete_message', (messageid, _userid))
+        data = cursor.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+            cursor.close()
+            conn.close()
+            flash("Message Deleted!", 'alert-success')
+            return redirect('/messages')
+        else:
+            cursor.close()
+            conn.close()
+            flash("This can't be done")
+            return render_template('error.html')
+
+    else:
+        return render_template('error.html', error="You do not have permission to perform this action OK.")
+
 
 @app.route('/validate_signin', methods=['POST'])
 def validate_signin():
@@ -187,7 +209,7 @@ def validate_signup():
             return render_template('signin.html')
         else:
             flash("That Email is already registered")
-        return render_template('/signup.html')
+        return render_template('signup.html')
 
     except Exception as err:
         return json.dumps({'Exception error':str(err)})

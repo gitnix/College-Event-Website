@@ -4,7 +4,7 @@ They are not used in the application and are just for various testing
 
 &raquo;
 
-
+<a href="/deletemessage/{{message_item[0]}}"><span class="closemessage fa fa-times-circle">ya</span></a>
 
 
 This file itself is just a file to copy/paste things into for a temporary time 
@@ -86,3 +86,34 @@ value= "{{request.form.eventPhone}}"
           <p><a class="btn" data-toggle="collapse" data-target="#viewdetails">View details &raquo;</a></p>
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+      <a class="btn list-group-item">
+            <li class="messageItem">
+                <h2 class="list-group-item-heading">
+                    {{message_item[1]}} 
+                    <div class="togglearrow fa fa-caret-right"></div>
+                    <div class="closemessage fa fa-times-circle"></div>
+
+                </h2>
+                <p class="list-group-item-text collapse">{{message_item[2]}}</p>
+                <a href="" class="fixlink"></a>
+            </li>
+        </a>
+
+
+<li class="messageItem btn list-group-item">
+                <h2 class="list-group-item-heading">
+                    {{message_item[1]}} 
+                    <div class="togglearrow fa fa-caret-right"></div>
+                    <div class="closemessage fa fa-times-circle"><a class="deletemessage" href="/deletemessage/{{message_item[0]}}"></a></div>
+                </h2>
+                <p class="list-group-item-text collapse">{{message_item[2]}}</p>
+            </li>

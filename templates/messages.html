@@ -4,10 +4,22 @@
 
     <script>
     $(document).ready(function() {
+
       $(".messageItem").click(function () {
         $(this).find('.togglearrow').toggleClass("fa-caret-right  fa-caret-down");
         $(this).find('p').toggleClass("in");  //collapse class alone hides data and in class shows it
       });
+
+      // unneeded as the page reloads when the x button is clicked
+      // just keeping here for reference
+
+      //i changed my mind from the above comment
+      //this immediately removes the item so it looks cleaner
+      $(".closemessage").click(function () {
+        // $(this).remove();
+        $(this).parents('li').remove();
+      });
+
     });
     </script>
 
@@ -22,22 +34,24 @@
     <button id="btnSignUp" class="btn btn-primary" href="/createmessage">Create New Message</button>
     <br>
     <br>
-    
-    <ul class ='list-group'>
+   {% if messages_data %} 
+        <p>Goo</p>
+        <ul class ='list-group'>
+            {% for message_item in messages_data %}
             
-        {% for message_item in messages_data %}
-        
-        <a class="btn list-group-item">
-            <li class="messageItem">
-                <h2 class="list-group-item-heading">
-                    {{message_item[0]}} 
-                    <div class="togglearrow fa fa-caret-right"></div>
-                    <div class="closemessage fa fa-times-circle"></div>
-                </h2>
-                <p class="list-group-item-text collapse">{{message_item[1]}}</p>
-            </li>
-        </a>
-        {% endfor %}
-    </ul>
+                <li class="messageItem btn list-group-item">
+                    <h2 class="list-group-item-heading">
+                        {{message_item[1]}} 
+                        <div class="togglearrow fa fa-caret-right"></div>
+                        <div class="closemessage fa fa-times-circle"><a class="deletemessage" href="/deletemessage/{{message_item[0]}}"></a></div>
+                    </h2>
+                    <p class="list-group-item-text collapse">{{message_item[2]}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>You have no messages</p>
+    {% endif %}
 
 {% endblock %}

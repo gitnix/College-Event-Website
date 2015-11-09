@@ -2,7 +2,6 @@
 
 
 DELIMITER $$
-delete from mysql.proc;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_user`(
     IN p_firstname VARCHAR(45),
     IN p_lastname VARCHAR(45),
@@ -103,9 +102,12 @@ IN p_user_id int(8)
 )
 BEGIN
     select
+    m.message_id,
     m.message_header,
     m.message_content, 
     m.creation_time,
+    m.to_user_id,
+    m.from_user_id,
     receiver.user_email,
     receiver.user_firstname,
     receiver.user_lastname,
@@ -131,4 +133,41 @@ BEGIN
 END$$
  
 DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE `sp_delete_message` (
+IN p_message_id int(8),
+IN p_user_id int(8)
+)
+BEGIN
+    if ( select not exists (select 1 from messages where message_id = p_message_id AND to_user_id = p_user_id) ) THEN
+     
+        select 'You dont have permission !!';
+     
+    ELSE
+        delete from messages
+        where message_id = p_message_id AND to_user_id = p_user_id; 
+    END IF;
+
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
