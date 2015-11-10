@@ -239,11 +239,14 @@ def validate_event():
         _eventDescription = request.form['eventDescription']
         _eventEmail = request.form['eventEmail']
         _eventPhone = request.form['eventPhone']
+        _eventLocation = request.form['eventLocation']
+        _eventDate = request.form['eventDate']
+        
 
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone))
+        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, _eventDate))
         data = cursor.fetchall()
 
         if len(data) is 0:

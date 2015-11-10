@@ -44,11 +44,11 @@
         <input type="text" name="eventPhone" id="eventPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.eventPhone}}" required>
 
         <label for="eventLocation" class="sr-only">Event Location</label>
-        <input type="text" name="eventLocation" id="eventLocation" class="form-control bfh-phone" placeholder="Event Location" value= "{{request.form.eventLocation}}" required>
+        <input type="text" name="eventLocation" id="eventLocation" class="form-control" placeholder="Event Location" value= "{{request.form.eventLocation}}" required>
 
         <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" placeholder="Event Date & Time" />
-                    <span class="input-group-addon">
+                    <input type='text' name="eventDate" id="eventDate" class="form-control" placeholder="Event Date & Time" />
+                    <span class="input-group-addon"><script type="text/javascript"></script>
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
         </div>
