@@ -1,9 +1,22 @@
-    {% extends "layout.html" %}
+{% extends "layout.html" %}
 
 {% block extra_css_js %}
-<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
-<script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
-<script src="../static/js/bootstrap-formhelpers-phone.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        stepping:30,
+                        minDate:moment()
+                    });
+                });
+            });
+    </script>
+
 {% endblock %}
 
 
@@ -25,6 +38,13 @@
          
         <label for="eventPhone" class="sr-only">Event Phone</label>
         <input type="text" name="eventPhone" id="eventPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.eventPhone}}" required>
+
+        <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" placeholder="Event Date & Time" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
         
         <div class="radiobuffer">
             <label class="radio-inline">
@@ -32,6 +52,9 @@
             </label>   
             <label class="radio-inline">
                 <input type="radio" name="eventType" value='private'>Private
+            </label> 
+            <label class="radio-inline">
+                <input type="radio" name="eventType" value='rso'>RSO
             </label> 
         </div>  
 

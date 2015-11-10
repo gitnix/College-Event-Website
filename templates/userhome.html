@@ -1,28 +1,39 @@
 {% extends "layout.html" %}
 
-{% block page %}EventList{% endblock %}
+{% block page %}Event List{% endblock %}
+{% block extra_heading %}
+    <div class="dropdown">
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Events By
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right">
+            <li><a href="#">Public</a></li>
+            <li><a href="#">Private</a></li>
+            <li><a href="#">RSO</a></li>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort Events By
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right">
+            <li><a href="#">Date</a></li>
+            <li><a href="#">Rating</a></li>
+        </ul>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <p>Events located here</p>
-
+    
+    <br>
 
     <ul class ='list-group'>
-            
         {% for event_item in events %}
-        
         <a href="/event/{{event_item[2]}}" class="list-group-item" >
-        <li>
-        
-
-        <h2 class="list-group-item-heading">{{event_item[0]}}</h2>
-
-        <p class="list-group-item-text">{{event_item[1]}}</p>
-        
-        
+            <li>
+                <h2 class="list-group-item-heading">{{event_item[0]}}</h2>
+                <p class="list-group-item-text">{{event_item[1]}}</p>
             </li>
         </a>
-        
-       
         {% endfor %}
     </ul>
 

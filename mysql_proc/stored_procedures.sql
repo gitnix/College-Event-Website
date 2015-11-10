@@ -86,19 +86,24 @@ DELIMITER ;
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$
-CREATE PROCEDURE `sp_get_events_by_type` (
-IN p_event_type VARCHAR(45)
+CREATE PROCEDURE `sp_get_events_by_type_sort` (
+IN p_event_type VARCHAR(45),
+IN p_event_sort VARCHAR(45)
 )
 BEGIN
-    select * from events where event_type = p_event_type;
+    select * from events 
+    where event_type = p_event_type
+    order by 
+    p_event_sort;
 END$$
- 
 DELIMITER ;
 
+----------------------------------------------------------------------------------------
 
 DELIMITER $$
 CREATE PROCEDURE `sp_get_messages_by_user` (
-IN p_user_id int(8)
+IN p_user_id int(8),
+IN p_message_sort VARCHAR(45)
 )
 BEGIN
     select
@@ -118,9 +123,12 @@ BEGIN
     inner join users receiver on receiver.user_id = m.to_user_id
     inner join users sender on sender.user_id = m.from_user_id
     where
-    m.to_user_id = p_user_id;
+    m.to_user_id = p_user_id
+    order by
+    p_message_sort;
+    
 END$$
-DELIMITER ;;
+DELIMITER ;
 
 ----------------------------------------------------------------------------------------
 

@@ -4,6 +4,10 @@ They are not used in the application and are just for various testing
 
 &raquo;
 
+
+cursor.callproc('sp_get_events_by_type', (_viewby, _sortby, _userFirstName, _userLastName ))
+
+
 <a href="/deletemessage/{{message_item[0]}}"><span class="closemessage fa fa-times-circle">ya</span></a>
 
 

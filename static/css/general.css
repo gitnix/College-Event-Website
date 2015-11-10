@@ -12,6 +12,23 @@ h1,h2,h3,h4,h5,h6{
     word-wrap:break-word;
 }
 
+.dropdown {
+    display: inline-block;
+}
+
+.username-header{
+    padding-top: 1.2em;
+}
+
+.repeated-heading{
+    font-size: 36px;
+}
+
+.btn-sm{
+    padding: 3px 10px !important;
+    font-size: 14px !important;
+}
+
 .wrapper{
     min-height: 100%;
     height: auto !important;

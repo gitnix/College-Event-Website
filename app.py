@@ -37,11 +37,15 @@ def signin():
 def userhome():
     try:
         if session.get('user'):
-            _event = session.get('eventviewtype')
 
+            _viewby = session.get('event-view-type')
+            _sortby = session.get('event-sort-type')
+            _userFirstName = session.get('user-first-name')
+            _userLastName = session.get('user-last-name')
+        
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_get_events_by_type', (_event, ))
+            cursor.callproc('sp_get_events_by_type_sort', (_viewby, _sortby ))
             events = cursor.fetchall()
 
             events_list = []
@@ -156,7 +160,6 @@ def delete_message(messageid):
     else:
         return render_template('error.html', error="You do not have permission to perform this action OK.")
 
-
 @app.route('/validate_signin', methods=['POST'])
 def validate_signin():
     try:
@@ -174,8 +177,11 @@ def validate_signin():
             #currently password is located as the 3rd column in users table
             if check_password_hash(str(data[0][2]), _password):
                 session['user'] = data[0][0]
-                session['eventviewtype'] = 'public'
+                session['event-view-type'] = 'public'
+                session['event-sort-type'] = 'event_date'
                 session['user_role'] = data[0][3]
+                session['user-first-name'] = data[0][4]
+                session['user-last-name'] = data[0][5]
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
