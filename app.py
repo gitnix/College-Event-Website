@@ -77,9 +77,9 @@ def show_event_profile(eventid):
 
             for eventinfo in eventdata:
                 #in order it is:
-                #Name, Description, Email, Phone
+                #Name, Description, Email, Phone, Loacation, Date
                 event_data = [
-                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5]
+                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7]
                 ]
 
                 cursor.close()
