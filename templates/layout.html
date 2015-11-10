@@ -44,8 +44,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a href="/" class="navbar-brand">Event Finder</a>
+                    {% if session.get ('user') %}
                     <div class='pull-left username-header'>{{session['user-first-name']}} </div>
                     <div class='pull-left username-header'> &nbsp {{session['user-last-name']}} </div>
+                    {% endif %}
                 </div>
                 <!-- Collection of nav links and other content for toggling -->
                 <div id="navbarCollapse" class="collapse navbar-collapse">

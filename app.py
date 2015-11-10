@@ -97,9 +97,10 @@ def messages():
     try:
         if session.get('user'):
             _user = session.get('user')
+            _sort = session.get('message-sort')
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_get_messages_by_user', (_user, ))
+            cursor.callproc('sp_get_messages_by_user', (_user, _sort ))
             
             # message_data = cursor.fetchall()
 
@@ -182,6 +183,7 @@ def validate_signin():
                 session['user_role'] = data[0][3]
                 session['user-first-name'] = data[0][4]
                 session['user-last-name'] = data[0][5]
+                session['message-sort'] = 'message_id'
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
