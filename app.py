@@ -175,6 +175,7 @@ def validate_signin():
             if check_password_hash(str(data[0][2]), _password):
                 session['user'] = data[0][0]
                 session['eventviewtype'] = 'public'
+                session['user_role'] = data[0][3]
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
