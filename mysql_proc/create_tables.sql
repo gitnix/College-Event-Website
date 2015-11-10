@@ -28,9 +28,27 @@ CREATE TABLE `events` (
  `event_description` varchar(255) NOT NULL,
  `event_email` varchar(255) NOT NULL,
  `event_phone` varchar(255) NOT NULL,
- `event_date` datetime NOT NULL,
+ `event_location` varchar(255) NOT NULL,
+ `event_date` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`event_id`),
  UNIQUE KEY(`event_id`,`event_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `rsos` (
+ `rso_id` int(8) NOT NULL AUTO_INCREMENT,
+ `rso_name` varchar(255) NOT NULL,
+ `rso_university_id` int(8) NOT NULL,
+ PRIMARY KEY (`rso_id`),
+ CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`rso_university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `user_associates_rso` (
+ `user_id` int(8) NOT NULL,
+ `rso_id` int(8) NOT NULL,
+ KEY `user_id` (`user_id`),
+ KEY `rso_id` (`rso_id`),
+ CONSTRAINT `user_associates_rso_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `user_associates_rso_2` FOREIGN KEY (`rso_id`) REFERENCES `rsos` (`rso_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_associates_university` (
@@ -38,8 +56,8 @@ CREATE TABLE `user_associates_university` (
  `university_id` int(8) NOT NULL,
  KEY `user_id` (`user_id`),
  KEY `university_id` (`university_id`),
- CONSTRAINT `user_associates_university_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
- CONSTRAINT `user_associates_university_ibfk_2` FOREIGN KEY (`university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
+ CONSTRAINT `user_associates_university_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `user_associates_university_2` FOREIGN KEY (`university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `messages` (

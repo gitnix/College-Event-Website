@@ -7,11 +7,12 @@ Students can sign up and view events in the area hosted by their university as w
 --Change the MySQL configurations in app.py to fit your environment
 
 
-##Installing from Scratch on Debian Linux
+##Installing from Scratch
 *Make sure python is on your system (python 2 or 3 will work)
 
 *Make sure Apache and MySQL are on your system:
 http://howtoubuntu.org/how-to-install-lamp-on-ubuntu
+check google if on windows on setting up wamp
 
 *Install pip (if not already installed)
 http://pip.readthedocs.org/en/stable/installing/
@@ -25,7 +26,7 @@ http://pip.readthedocs.org/en/stable/installing/
 
 *Run the sql from the sql files located in the mysql_proc folder in the database to create the tables and procedures necessary
 
-*Navigate to directory of app and type 'python app.py' in terminal
+*In the terminal or command prompt navigate to directory of app and type 'python app.py' in terminal
 
 ##Enjoy!
 
