@@ -59,7 +59,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_event`(
 )
 BEGIN
     if ( select exists (select 1 from events where event_email = p_eventEmail) ) THEN
-     dd
+    
         select 'Event with that email exists !!';
 
     elseif (select exists (select 1 from events where event_location = p_eventLocation AND
@@ -76,7 +76,7 @@ BEGIN
             event_email,
             event_phone,
             event_location,
-            event_dates
+            event_date
         )
         values
         (
