@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block extra_css_js %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
+    <script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
+    <script src="../static/js/bootstrap-formhelpers-phone.js"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        stepping:30,
+                        minDate:moment()
+                    });
+                });
+            });
+    </script>
+
+{% endblock %}
+
+
+{% block page %}Create RSO{% endblock %}
+
+{% block content %}
+    <form class="form-signin" action="/validate_event" method="post">
+        
+        <label for="rsoName" class="sr-only">RSO Name</label>
+        <input type="name" name="rsoName" id="rsoName" class="form-control" placeholder="RSO Name" value="{{request.form.rsoName}}" required autofocus>
+
+        <label for="rsoDescription" class="sr-only">RSO Description</label>
+        <input type="name" name="rsoDescription" id="rsoDescription" class="form-control" placeholder="RSO Description" value= "{{request.form.rsoDescription}}"  required>
+
+        <label for="rsoEmail" class="sr-only">RSO Email</label>
+        <input type="email" name="rsoEmail" id="rsoEmail" class="form-control" placeholder="rso@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+         
+        <label for="rsoPhone" class="sr-only">RSO Phone</label>
+        <input type="text" name="rsoPhone" id="rsoPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.rsoPhone}}" required> 
+
+        <div class="push"></div>
+
+        <p>Your RSO will become active when five other students accept your RSO creation message.
+        </p>
+
+        <label for="rsoEmail1" class="sr-only">RSO Email Student 1</label>
+        <input type="email" name="rsoEmail" id="rsoEmail1" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <label for="rsoEmail2" class="sr-only">RSO Email Student 2</label>
+        <input type="email" name="rsoEmail" id="rsoEmail2" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <label for="rsoEmail3" class="sr-only">RSO Email Student 3</label>
+        <input type="email" name="rsoEmail" id="rsoEmail3" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <label for="rsoEmail4" class="sr-only">RSO Email Student 4</label>
+        <input type="email" name="rsoEmail" id="rsoEmail4" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <label for="rsoEmail5" class="sr-only">RSO Email Student 5</label>
+        <input type="email" name="rsoEmail" id="rsoEmail5" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+
+        <div class="push"></div>
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Create RSO</button>
+        
+    </form>
+{% endblock %}   
+
+

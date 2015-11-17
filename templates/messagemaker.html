@@ -2,11 +2,51 @@
 
 {% extends "layout.html" %}
 
-{% block header %} {% include 'header_home.html' %} {% endblock %}
+{% block extra_css_js %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
+    <script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
+    <script src="../static/js/bootstrap-formhelpers-phone.js"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        stepping:30,
+                        minDate:moment()
+                    });
+                });
+            });
+    </script>
+
+{% endblock %}
+
+
 
 {% block page %}Create Message{% endblock %}
 
 {% block content %}
+
+<form class="form-signin" action="/validate_event" method="post">
+        
+        <label for="messageHeader" class="sr-only">Message Header</label>
+        <input type="text" name="messageHeader" id="messageHeader" class="form-control" placeholder="Message Header" value="{{request.form.messageHeader}}" required autofocus>
+
+        <label for="messageBody" class="sr-only">Message Body</label>
+        <textarea rows="3" name="messageBody" id="messageBody" class="form-control" placeholder="Message Body"></textarea>
+
+        <label for="messageRecipient" class="sr-only">Message Recipient</label>
+        <input type="email" name="messageRecipient" id="messageRecipient" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.eventEmail}}"  required> 
+
+        <div class="push"></div>
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Send Message</button>
+        
+</form>
     
 
 

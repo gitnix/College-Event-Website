@@ -1,6 +1,5 @@
 -- Run this code in the SQL tab in the database
 
-
 CREATE TABLE `users` (
  `user_id` int(8) NOT NULL AUTO_INCREMENT,
  `user_email` varchar(255) NOT NULL,
@@ -37,10 +36,50 @@ CREATE TABLE `events` (
 CREATE TABLE `rsos` (
  `rso_id` int(8) NOT NULL AUTO_INCREMENT,
  `rso_name` varchar(255) NOT NULL,
+ `rso_description` varchar(255) NOT NULL,
+ `rso_email` varchar(255) NOT NULL,
+ `rso_phone` varchar(255) NOT NULL,
  `rso_university_id` int(8) NOT NULL,
+ `rso_approval` int(1) NOT NULL DEFAULT 0,
  PRIMARY KEY (`rso_id`),
  CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`rso_university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- sql trigger that checks if  there are greater than 5 users in a petition for a particular rso (that was created to the temp table). If this is the case then it adds that temp rso to the pending approvals list
+CREATE TABLE `rso_petitions` (
+ `petition_rso_id` int(8) NOT NULL,
+ `petition_user_id` int(8) NOT NULL,
+ CONSTRAINT `pk_rso_user` PRIMARY KEY (`petition_rso_id`, `petition_user_id`),
+ CONSTRAINT `petition_rso_is_associated_with` FOREIGN KEY (`petition_rso_id`) REFERENCES `rsos` (`rso_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `petition_user` FOREIGN KEY (`petition_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- -- sql trigger that checks if  there are greater than 5 users in a petition for a particular rso (that was created to the temp table). If this is the case then it adds that temp rso to the pending approvals list
+-- CREATE TABLE `rso_petitions` (
+--  `petition_rso_id` int(8) NOT NULL,
+--  `petition_user_id` int(8) NOT NULL,
+--  PRIMARY KEY (`petition_rso_id`, ),
+--  CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`petition_rso_id`) REFERENCES `temp_rsos` (`temp_rso_id`) ON DELETE CASCADE ON UPDATE CASCADE
+--  CONSTRAINT `petition_user` FOREIGN KEY (`petition_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- CREATE TABLE `temp_rsos` (
+--  `temp_rso_id` int(8) NOT NULL AUTO_INCREMENT,
+--  `temp_rso_name` varchar(255) NOT NULL,
+--  `temp_rso_university_id` int(8) NOT NULL,
+--  PRIMARY KEY (`temp_rso_id`),
+--  CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`temp_rso_university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- CREATE TABLE `rso_pending_approvals` (
+--  `pending_approval_id` int(8) NOT NULL,
+--  `temp_rso_id` int(8) NOT NULL,
+--  PRIMARY KEY (`pending_approval_id`),
+--  CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`temp_rso_id`) REFERENCES `temp_rsos` (`temp_rso_id`) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `user_associates_rso` (
  `user_id` int(8) NOT NULL,

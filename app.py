@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, redirect, session, \
     flash, url_for
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
+from datetime import datetime
 import logging
 
 mysql = MySQL()
@@ -81,9 +82,15 @@ def show_event_profile(eventid):
                 event_data = [
                     eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7]
                 ]
+            edate = event_data.pop(5)
+            #this parses the input as a date object
+            new_date_object = datetime.strptime(edate, '%Y-%m-%d %H:%M:%S')
+            #this makes the date object into a formatted string
+            new_edate = datetime.strftime(new_date_object, '%m/%d/%Y %I:%M %p')
+            event_data.append(new_edate)
 
-                cursor.close()
-                conn.close()
+            cursor.close()
+            conn.close()
 
             return render_template('event.html', eventinfo = event_data)
         else:
@@ -136,6 +143,10 @@ def messages():
 @app.route('/createmessage')
 def create_message():
     return render_template('messagemaker.html')
+
+@app.route('/createrso')
+def create_rso():
+    return render_template('rsomaker.html')
 
 @app.route('/deletemessage/<messageid>')
 def delete_message(messageid):
@@ -226,7 +237,7 @@ def validate_signup():
         cursor.close()
         conn.close()
 
-@app.route('/eventmaker')
+@app.route('/createevent')
 def create_event():
     if session.get('user'):
         return render_template('eventmaker.html')
@@ -243,12 +254,13 @@ def validate_event():
         _eventPhone = request.form['eventPhone']
         _eventLocation = request.form['eventLocation']
         _eventDate = request.form['eventDate']
-        
+
+        date_object = datetime.strptime(_eventDate, '%m/%d/%Y %I:%M %p')
 
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, _eventDate))
+        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, date_object))
         data = cursor.fetchall()
 
         if len(data) is 0:

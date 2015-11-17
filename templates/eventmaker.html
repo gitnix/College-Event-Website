@@ -19,6 +19,7 @@
                     });
                 });
             });
+
     </script>
 
 {% endblock %}
@@ -27,7 +28,7 @@
 {% block page %}Create Event{% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="/validate_event" method="post">
+    <form class="form-signin" name="myform" action="/validate_event" method="post">
         
         <label for="eventName" class="sr-only">Event Name</label>
         <input type="name" name="eventName" id="eventName" class="form-control" placeholder="Event Name" value="{{request.form.eventName}}" required autofocus>
