@@ -2,6 +2,15 @@ All the Files in this folder can be ignored
 They are not used in the application and are just for various testing
 
 
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtq8W_asbsr8akRKtoiwPPv6gfWJswNPw&signed_in=true&libraries=places&callback=initMap" async defer></script>
+
+
+
+
+
 &raquo;
 
 

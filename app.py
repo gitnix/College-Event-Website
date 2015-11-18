@@ -7,6 +7,7 @@ import logging
 
 mysql = MySQL()
 app = Flask(__name__)
+# app.config.from_envvar('universityapp_settings')
 app.secret_key = 'secret'
 
 # MySQL configurations
@@ -290,4 +291,4 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug = True)
