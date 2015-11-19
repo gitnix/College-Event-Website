@@ -2,21 +2,47 @@
 
 {% block extra_css_js %}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+ 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
     <script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
     <script src="../static/js/bootstrap-formhelpers-phone.js"></script>
 
+
+
     <script type="text/javascript">
             $(document).ready(function() {
-                $(function () {
-                    $('#datetimepicker1').datetimepicker({
-                        stepping:30,
-                        minDate:moment()
-                    });
+                // $(function () {
+                //     $('#datetimepicker1').datetimepicker({
+                //         stepping:30,
+                //         minDate:moment()
+                //     });
+                // });
+
+                var start = moment();
+                var remainder = (60 - start.minute()) % 30;
+                var minDate = moment(start).add("minutes", remainder );
+                var endDate = moment(minDate).add("minutes", 30);
+
+                // $('#calenderchoose').click(function(){
+                //     $('#eventDate').focus();
+                // });
+
+                $('input[name="eventDate"]').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                minDate: moment(minDate),
+                startDate:moment(minDate),
+                endDate: moment(endDate),
+                drops: "up",
+                locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                }
                 });
             });
 
@@ -48,7 +74,7 @@
         <div class='input-group date' id='datetimepicker1'>
                     <input type='text' name="eventDate" id="eventDate" class="form-control" placeholder="Event Date & Time" />
                     <span class="input-group-addon"><script type="text/javascript"></script>
-                        <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="glyphicon glyphicon-calendar" id="calenderchoose"></span>
                     </span>
         </div>
         

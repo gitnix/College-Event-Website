@@ -5,6 +5,19 @@ They are not used in the application and are just for various testing
 
 
 
+
+eventmaker extra css js
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+
+
+
+
+
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtq8W_asbsr8akRKtoiwPPv6gfWJswNPw&signed_in=true&libraries=places&callback=initMap" async defer></script>
 
 
