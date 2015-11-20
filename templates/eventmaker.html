@@ -17,21 +17,11 @@
 
     <script type="text/javascript">
             $(document).ready(function() {
-                // $(function () {
-                //     $('#datetimepicker1').datetimepicker({
-                //         stepping:30,
-                //         minDate:moment()
-                //     });
-                // });
 
                 var start = moment().startOf('minute');
                 var remainder = (60 - start.minute()) % 30;
                 var minDate = moment(start).add("minutes", remainder );
                 var endDate = moment(minDate).add("minutes", 30);
-
-                // $('#calenderchoose').click(function(){
-                //     $('#eventDate').focus();
-                // });
 
                 $('input[name="eventDate"]').daterangepicker({
                 timePicker: true,

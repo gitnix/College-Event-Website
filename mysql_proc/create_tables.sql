@@ -13,7 +13,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `universities` (
  `university_id` int(8) NOT NULL AUTO_INCREMENT,
- `university_name` int(255) NOT NULL,
+ `university_name` varchar(255) NOT NULL,
  `university_domain` varchar(45) NOT NULL,
  `university_location` varchar(255) NOT NULL,
  PRIMARY KEY (`university_id`),

@@ -36,6 +36,44 @@ DELIMITER ;
 
 ----------------------------------------------------------------------------------------
 
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_university`(
+    IN p_universityname VARCHAR(255),
+    IN p_universitylocation VARCHAR(255),
+    IN p_universitydomain VARCHAR(45)
+)
+BEGIN
+    if ( select exists (select 1 from universities 
+        where university_name = p_universityname or
+        university_location = p_universitylocation or
+        university_domain = p_universitydomain
+        ) ) THEN
+     
+        select 'University Exists !!';
+     
+    ELSE
+     
+        insert into universities
+        (
+            university_name,
+            university_domain,
+            university_location
+        )
+        values
+        (
+            p_universityname,
+            p_universitydomain,
+            p_universitylocation
+        );
+     
+    END IF;
+END$$
+DELIMITER ;
+
+
+----------------------------------------------------------------------------------------
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validate_signin`(
     IN p_email VARCHAR(255)

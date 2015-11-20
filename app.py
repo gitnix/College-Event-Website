@@ -240,12 +240,48 @@ def validate_signup():
         cursor.close()
         conn.close()
 
+
+
+@app.route('/validate_university', methods=['POST'])
+def validate_university():
+    try:
+        _universityname = request.form['universityName']
+        _universitylocation = request.form['universityLocation']
+        _universitydomain = request.form['universityDomain']
+
+        #let's call MySQL
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_create_university', (_universityname, _universitylocation, _universitydomain))
+        data = cursor.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+            flash("University Created!", 'alert-success')
+            return render_template('userhome.html')
+        else:
+            flash("That University is already registered")
+        return render_template('universitymaker.html')
+
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/createevent')
 def create_event():
-    if session.get('user'):
+    if session.get('user_role') == ('admin' or 'super_admin'):
         return render_template('eventmaker.html')
     else:
         return render_template('error.html', error="You must be logged in to access this page.")
+
+@app.route('/createuniversity')
+def create_university():
+    if session.get('user_role') == 'super_admin':
+        return render_template('universitymaker.html')
+    else:
+        return render_template('error.html', error="You do not have the rights to access this page.")
 
 @app.route('/validate_event', methods=['POST'])
 def validate_event():
