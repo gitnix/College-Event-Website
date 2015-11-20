@@ -79,16 +79,18 @@ def show_event_profile(eventid):
 
             for eventinfo in eventdata:
                 #in order it is:
-                #Name, Description, Email, Phone, Loacation, Date
+                #Name, Description, Email, Phone, Loacation, startdate, endDate
                 event_data = [
-                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7]
+                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8]
                 ]
-            edate = event_data.pop(5)
-            #this parses the input as a date object
-            new_date_object = datetime.strptime(edate, '%Y-%m-%d %H:%M:%S')
-            #this makes the date object into a formatted string
-            new_edate = datetime.strftime(new_date_object, '%m/%d/%Y %I:%M %p')
-            event_data.append(new_edate)
+
+            edate_start = event_data.pop(5)
+            new_edate_start = datetime.strftime(edate_start, '%m/%d/%Y %I:%M %p')
+            event_data.append(new_edate_start)
+
+            edate_end = event_data.pop(5)
+            new_edate_end = datetime.strftime(edate_end, '%m/%d/%Y %I:%M %p')
+            event_data.append(new_edate_end)
 
             cursor.close()
             conn.close()
@@ -254,14 +256,19 @@ def validate_event():
         _eventEmail = request.form['eventEmail']
         _eventPhone = request.form['eventPhone']
         _eventLocation = request.form['eventLocation']
-        _eventDate = request.form['eventDate']
+        # _eventDate = request.form['eventDate']
+        _eventStart = request.form['eventStart']
+        _eventEnd = request.form['eventEnd']
+        # _eventEnd = request.form['eventEnd']
 
-        date_object = datetime.strptime(_eventDate, '%m/%d/%Y %I:%M %p')
+
+        date_object = datetime.strptime(_eventStart, '%m/%d/%Y %I:%M %p')
+        date_object2 = datetime.strptime(_eventEnd, '%m/%d/%Y %I:%M %p')
 
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, date_object))
+        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, date_object, date_object2))
         data = cursor.fetchall()
 
         if len(data) is 0:

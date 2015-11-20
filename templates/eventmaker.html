@@ -24,7 +24,7 @@
                 //     });
                 // });
 
-                var start = moment();
+                var start = moment().startOf('minute');
                 var remainder = (60 - start.minute()) % 30;
                 var minDate = moment(start).add("minutes", remainder );
                 var endDate = moment(minDate).add("minutes", 30);
@@ -41,9 +41,15 @@
                 endDate: moment(endDate),
                 drops: "up",
                 locale: {
-                    format: 'MM/DD/YYYY h:mm A'
+                    format: 'MM/DD/YYYY hh:mm a'
                 }
                 });
+
+                var submitStartDate = $('#eventDate').data('daterangepicker').startDate.format("MM/DD/YYYY hh:mm a");
+                document.getElementById('eventStart').value = submitStartDate;
+
+                var submitEndDate = $('#eventDate').data('daterangepicker').endDate.format("MM/DD/YYYY hh:mm a");
+                document.getElementById('eventEnd').value = submitEndDate;
             });
 
     </script>
@@ -77,6 +83,10 @@
                         <span class="glyphicon glyphicon-calendar" id="calenderchoose"></span>
                     </span>
         </div>
+
+        <input type="hidden" name="eventStart" id="eventStart" />
+
+        <input type="hidden" name="eventEnd" id="eventEnd" />
         
         <div class="radiobuffer">
             <label class="radio-inline">

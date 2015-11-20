@@ -28,7 +28,8 @@ CREATE TABLE `events` (
  `event_email` varchar(255) NOT NULL,
  `event_phone` varchar(255) NOT NULL,
  `event_location` varchar(255) NOT NULL,
- `event_date` VARCHAR(255) NOT NULL,
+ `event_date_start` DATETIME NOT NULL,
+ `event_date_end` DATETIME NOT NULL,
  PRIMARY KEY (`event_id`),
  UNIQUE KEY(`event_id`,`event_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

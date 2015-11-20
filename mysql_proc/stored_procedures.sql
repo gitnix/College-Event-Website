@@ -55,15 +55,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_event`(
     IN p_eventEmail VARCHAR(255),
     IN p_eventPhone VARCHAR(255),
     IN p_eventLocation VARCHAR(255),
-    IN p_eventDate VARCHAR(255)
+    IN p_eventDateStart DATETIME,
+    IN p_eventDateEnd DATETIME
 )
 BEGIN
     if ( select exists (select 1 from events where event_email = p_eventEmail) ) THEN
     
         select 'Event with that email exists !!';
-
     elseif (select exists (select 1 from events where event_location = p_eventLocation AND
-                            event_date = p_eventDate) ) THEN
+                            event_date_start = p_eventDateStart) ) THEN
         select 'There is another event scheduled here at this time!!';
      
     ELSE
@@ -76,7 +76,8 @@ BEGIN
             event_email,
             event_phone,
             event_location,
-            event_date
+            event_date_start,
+            event_date_end
         )
         values
         (
@@ -86,7 +87,8 @@ BEGIN
             p_eventEmail,
             p_eventPhone,
             p_eventLocation,
-            p_eventDate
+            p_eventDateStart,
+            p_eventDateEnd
         );
      
     END IF;
