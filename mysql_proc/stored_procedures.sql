@@ -63,7 +63,15 @@ BEGIN
     
         select 'Event with that email exists !!';
     elseif (select exists (select 1 from events where event_location = p_eventLocation AND
-                            event_date_start = p_eventDateStart) ) THEN
+
+        (         
+            (p_eventDateStart < event_date_start AND p_eventDateEnd > event_date_start) OR
+            (p_eventDateStart > event_date_start AND p_eventDateEnd < event_date_end) OR
+            (p_eventDateStart < event_date_end AND p_eventDateEnd > event_date_end) OR
+            (p_eventDateStart < event_date_start AND p_eventDateEnd > event_date_end) OR
+            (p_eventDateStart = event_date_start AND p_eventDateEnd = event_date_end)
+        )
+                              ) ) THEN
         select 'There is another event scheduled here at this time!!';
      
     ELSE
@@ -173,21 +181,3 @@ BEGIN
 
 END$$
 DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

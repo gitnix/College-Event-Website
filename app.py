@@ -256,11 +256,8 @@ def validate_event():
         _eventEmail = request.form['eventEmail']
         _eventPhone = request.form['eventPhone']
         _eventLocation = request.form['eventLocation']
-        # _eventDate = request.form['eventDate']
         _eventStart = request.form['eventStart']
         _eventEnd = request.form['eventEnd']
-        # _eventEnd = request.form['eventEnd']
-
 
         date_object = datetime.strptime(_eventStart, '%m/%d/%Y %I:%M %p')
         date_object2 = datetime.strptime(_eventEnd, '%m/%d/%Y %I:%M %p')

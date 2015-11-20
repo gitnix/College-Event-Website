@@ -45,11 +45,14 @@
                 }
                 });
 
-                var submitStartDate = $('#eventDate').data('daterangepicker').startDate.format("MM/DD/YYYY hh:mm a");
-                document.getElementById('eventStart').value = submitStartDate;
+                $( "#myform" ).submit(function( event ) {
+                    var submitStartDate = $('#eventDate').data('daterangepicker').startDate.format("MM/DD/YYYY hh:mm a");
+                    document.getElementById('eventStart').value = submitStartDate;
 
-                var submitEndDate = $('#eventDate').data('daterangepicker').endDate.format("MM/DD/YYYY hh:mm a");
-                document.getElementById('eventEnd').value = submitEndDate;
+                    var submitEndDate = $('#eventDate').data('daterangepicker').endDate.format("MM/DD/YYYY hh:mm a");
+                    document.getElementById('eventEnd').value = submitEndDate;                
+                });
+
             });
 
     </script>
@@ -60,7 +63,7 @@
 {% block page %}Create Event{% endblock %}
 
 {% block content %}
-    <form class="form-signin" name="myform" action="/validate_event" method="post">
+    <form class="form-signin" name="myform" id="myform" action="/validate_event" method="post">
         
         <label for="eventName" class="sr-only">Event Name</label>
         <input type="name" name="eventName" id="eventName" class="form-control" placeholder="Event Name" value="{{request.form.eventName}}" required autofocus>
