@@ -7,6 +7,7 @@ CREATE TABLE `users` (
  `user_role` varchar(20) NOT NULL DEFAULT 'student',
  `user_firstname` varchar(45) NOT NULL,
  `user_lastname` varchar(45) NOT NULL,
+ `user_university` int(8) NOT NULL,
  PRIMARY KEY (`user_id`),
  UNIQUE KEY(`user_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -30,6 +31,7 @@ CREATE TABLE `events` (
  `event_location` varchar(255) NOT NULL,
  `event_date_start` DATETIME NOT NULL,
  `event_date_end` DATETIME NOT NULL,
+ `event_university` int(8),
  PRIMARY KEY (`event_id`),
  UNIQUE KEY(`event_id`,`event_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

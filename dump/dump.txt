@@ -39,6 +39,17 @@ bootstrap navbar background
 http://work.smarchal.com/twbscolor/css/7c6751564738e7f4e99d98981
 
 
+
+<li><a href="#" onclick="document.getElementById('typeForm').submit();">Public</a></li>
+                <li><a href="#" onclick="document.getElementById('typeForm').submit();">Private</a></li>
+                <li><a href="#" onclick="document.getElementById('typeForm').submit();">RSO</a></li>
+
+
+
+
+
+
+
 value= "{{request.form.eventPhone}}"
 
 <!--                 <div class= "header">

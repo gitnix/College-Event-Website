@@ -55,13 +55,15 @@ def userhome():
         if session.get('user'):
 
             _viewby = session.get('event-view-type')
+            logging.warning(_viewby)
             _sortby = session.get('event-sort-type')
             _userFirstName = session.get('user-first-name')
             _userLastName = session.get('user-last-name')
+            _userUniversity = session.get('user-university')
         
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_get_events_by_type_sort', (_viewby, _sortby ))
+            cursor.callproc('sp_get_events_by_type_sort', (_viewby, _sortby, _userUniversity))
             events = cursor.fetchall()
 
             events_list = []
@@ -74,11 +76,22 @@ def userhome():
             cursor.close()
             conn.close()
 
-            return render_template('userhome.html', events = events_list)
+            return render_template('userhome.html', events=events_list)
         else:
             return render_template('error.html', error="You must be logged in to access this page.")
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
+
+
+@app.route('/change_type', methods=['POST'])
+def change_type_sort():
+    _type = request.form['eventType']
+    session['event-view-type'] = _type
+    logging.warning("We are now in change_type")
+    logging.warning(session.get('event-view-type'))
+    logging.warning("we are still in change_type")
+    # return render_template('userhome.html')
+    return redirect('/userhome')
 
 @app.route('/event/<eventid>')
 def show_event_profile(eventid):
@@ -90,6 +103,13 @@ def show_event_profile(eventid):
             cursor = conn.cursor()
             cursor.callproc('sp_get_event', (eventid, ))
             eventdata = cursor.fetchall()
+
+            if len(eventdata) is 0:
+                conn.commit()
+                cursor.close()
+                conn.close()
+                return render_template('error.html', error="Page does not exist")
+
 
             for eventinfo in eventdata:
                 #in order it is:
@@ -212,6 +232,7 @@ def validate_signin():
                 session['user-first-name'] = data[0][4]
                 session['user-last-name'] = data[0][5]
                 session['message-sort'] = 'message_id'
+                session['user-university'] = data[0][6]
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
@@ -232,12 +253,13 @@ def validate_signup():
         _lastname = request.form['inputLastName']
         _email = request.form['inputEmail']
         _password = request.form['inputPassword']
+        _universityid = request.form['universitySelector']
 
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
         _hashed_password = generate_password_hash(_password)
-        cursor.callproc('sp_create_user', (_firstname, _lastname, _email, _hashed_password))
+        cursor.callproc('sp_create_user', (_firstname, _lastname, _email, _hashed_password, _universityid))
         data = cursor.fetchall()
 
         if len(data) is 0:
@@ -311,6 +333,8 @@ def validate_event():
 
         date_object = datetime.strptime(_eventStart, '%m/%d/%Y %I:%M %p')
         date_object2 = datetime.strptime(_eventEnd, '%m/%d/%Y %I:%M %p')
+
+
 
         #let's call MySQL
         conn = mysql.connect()

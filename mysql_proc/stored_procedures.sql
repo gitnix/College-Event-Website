@@ -6,7 +6,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_user`(
     IN p_firstname VARCHAR(45),
     IN p_lastname VARCHAR(45),
     IN p_email VARCHAR(255),
-    IN p_password VARCHAR(255)
+    IN p_password VARCHAR(255),
+    IN p_university_id int(8)
 )
 BEGIN
     if ( select exists (select 1 from users where user_email = p_email) ) THEN
@@ -20,14 +21,16 @@ BEGIN
             user_firstname,
             user_lastname,
             user_email,
-            user_password
+            user_password,
+            user_university
         )
         values
         (
             p_firstname,
             p_lastname,
             p_email,
-            p_password
+            p_password,
+            p_university_id
         );
      
     END IF;
@@ -36,6 +39,28 @@ DELIMITER ;
 
 ----------------------------------------------------------------------------------------
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_user_associates_university`(
+    IN p_email varchar(255),
+    IN p_university_id int(8)
+)
+
+select u.u
+BEGIN
+    insert into user_associates_university
+    (
+        user_id, 
+        university_id
+    )
+    values
+    (
+        p_user_id,
+        p_university_id
+    );
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_university`(
@@ -146,13 +171,32 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_get_events_by_type_sort` (
 IN p_event_type VARCHAR(45),
-IN p_event_sort VARCHAR(45)
+IN p_event_sort VARCHAR(45),
+IN p_university_id int(8)
 )
 BEGIN
-    select * from events 
-    where event_type = p_event_type
-    order by 
-    p_event_sort;
+    IF (p_event_type = 'private') THEN
+        select * from events where
+            event_university = p_university_id
+            AND event_type = 'private';
+    ELSE
+        select * from events 
+        where event_type = p_event_type
+        order by 
+        p_event_sort;
+    END IF;
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_user_by_email` (
+IN p_email VARCHAR(45)
+)
+BEGIN
+    select user_id from users 
+    where user_email = p_email;
 END$$
 DELIMITER ;
 

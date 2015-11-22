@@ -1,25 +1,49 @@
 {% extends "layout.html" %}
 
+{% block extra_css_js %}
+
+    <script>
+        $(document).ready(function() {
+
+            $('.typeClass > li > a').click(function(event) {
+                var selected = $(this).text().toLowerCase();
+                event.preventDefault();
+                $('#eventType').val(selected);
+                $('#typeForm').submit();
+            });
+        }); 
+    </script>
+    
+{% endblock %}
+
 {% block page %}Event List{% endblock %}
 {% block extra_heading %}
-    <div class="dropdown">
-        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Events By
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu pull-right">
-            <li><a href="#">Public</a></li>
-            <li><a href="#">Private</a></li>
-            <li><a href="#">RSO</a></li>
-        </ul>
-    </div>
+    
+    <form id="typeForm" action="/change_type" method="post">
 
-    <div class="dropdown">
-        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort Events By
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu pull-right">
-            <li><a href="#">Date</a></li>
-            <li><a href="#">Rating</a></li>
-        </ul>
-    </div>
+        <div class="dropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Events By
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu typeClass pull-right">
+                <li><a href="#">Public</a></li>
+                <li><a href="#">Private</a></li>
+                <li><a href="#">RSO</a></li>
+            </ul>
+        </div>
+
+        <input type="hidden" name="eventType" id="eventType" />
+    </form>
+
+        <div class="dropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort Events By
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">Date</a></li>
+                <li><a href="#">Rating</a></li>
+            </ul>
+        </div>
+
+
 {% endblock %}
 
 {% block content %}
