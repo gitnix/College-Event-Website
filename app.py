@@ -27,7 +27,21 @@ def main():
 
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_get_universities', )
+    universities = cursor.fetchall()
+
+    university_array = []
+    for university in university_array:
+        university_item = [
+            university[0], university[1], university[2]
+        ]
+        university_array.append(university_item)
+
+    cursor.close()
+    conn.close()
+    return render_template('signup.html', university_list = universities)
 
 @app.route('/signin')
 def signin():
@@ -71,7 +85,7 @@ def show_event_profile(eventid):
     # show the event profile for that event
     try:    
         if session.get('user'):
-            # _event_id = eventid   
+            # _event_id = eventid 
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_event', (eventid, ))
@@ -103,7 +117,7 @@ def show_event_profile(eventid):
         return json.dumps({'Exception error':str(err)})
         
 @app.route('/messages')
-def messages():
+def messages(): 
     try:
         if session.get('user'):
             _user = session.get('user')
@@ -271,7 +285,7 @@ def validate_university():
 
 @app.route('/createevent')
 def create_event():
-    if session.get('user_role') == ('admin' or 'super_admin'):
+    if session.get('user_role') in ('admin', 'super_admin'):
         return render_template('eventmaker.html')
     else:
         return render_template('error.html', error="You must be logged in to access this page.")

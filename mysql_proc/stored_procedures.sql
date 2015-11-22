@@ -200,6 +200,17 @@ END$$
  
 DELIMITER ;
 
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_universities`()
+BEGIN
+    select * from universities;
+END$$
+ 
+DELIMITER ;
+
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$

@@ -1,5 +1,32 @@
 {% extends "layout.html" %}
 
+{% block extra_css_js %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/js/select2.min.js"></script>
+
+    
+    <script type="text/javascript">
+            var domain = "";
+            $(document).ready(function() {
+                $('#universitySelector').select2({
+                    tags:"true",
+                    placeholder:"Select a University"
+                });
+
+                $("#universitySelector").change(function(){
+                    domain = $('#universitySelector').find('option:selected').data('one')
+                    $( "#domainInsert" ).empty();                     
+                    $( "#domainInsert" ).append( domain );
+                });
+
+                $( "#signupForm" ).submit(function( event ) {
+                    emailValue = document.getElementById('inputEmail').value
+                    document.getElementById('inputEmail').value = (emailValue + '@' + domain);               
+                });
+            });
+    </script>
+{% endblock %}
+
 {% block header %}{% include 'header_signup.html' %} {% endblock %}
 
 {% block heading %}
@@ -8,23 +35,40 @@
 {% block page %}Sign Up{% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="/validate_signup" method="post">
+    <form class="form-signin" id="signupForm" action="/validate_signup" method="post">
+
+        <p>Select your university:</p>
+        <select name="universitySelector" id="universitySelector" style="width:100%" required>
+            <option></option>
+            {% for university in university_list %}
+                <option value="{{ university[0]}}" data-one="{{university[2]}}"> {{ university[1]}} </option>
+            {% endfor %}
+        </select>
+
+        <div class="push"></div>
 
         <label for="inputFirstName" class="sr-only">First Name</label>
         <input type="name" name="inputFirstName" id="inputFirstName" class="form-control" placeholder="First Name" value="{{request.form.inputFirstName}}" required autofocus>
 
         <label for="inputLastName" class="sr-only">Last Name</label>
-        <input type="name" name="inputLastName" id="inputLastName" class="form-control" placeholder="Last Name" value= "{{request.form.inputLastName}}" required>
+        <input type="name" name="inputLastName" id="inputLastName" class="form-control" placeholder="Last Name" value= "{{request.form.inputLastName}}" required> 
 
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" value= "{{request.form.inputEmail}}"  required>
+        <div class="emailInput">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="text" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" value= "{{request.form.inputEmail}}"  required>
+            <span id="domainName">@<span id="domainInsert">university</span>.edu</span>
+        </div> 
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" value= "{{request.form.inputPassword}}"  required>
+
+        <div class="push"></div>
          
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         
     </form>
 {% endblock %}   
+
+
 
 

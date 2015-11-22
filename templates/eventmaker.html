@@ -62,7 +62,7 @@
         <input type="name" name="eventDescription" id="eventDescription" class="form-control" placeholder="Event Description" value= "{{request.form.eventDescription}}"  required>
 
         <label for="eventEmail" class="sr-only">Event Email</label>
-        <input type="email" name="eventEmail" id="eventEmail" class="form-control" placeholder="Event@University.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" value= "{{request.form.eventEmail}}"  required>
+        <input type="email" name="eventEmail" id="eventEmail" class="form-control" placeholder="Event@University.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.eventEmail}}"  required>
          
         <label for="eventPhone" class="sr-only">Event Phone</label>
         <input type="text" name="eventPhone" id="eventPhone" class="form-control bfh-phone" data-country="US" placeholder="(123) 123-4567" value= "{{request.form.eventPhone}}" required>
