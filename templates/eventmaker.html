@@ -18,6 +18,8 @@
     <script type="text/javascript">
             $(document).ready(function() {
 
+                $('#show-me').hide(); 
+
                 var start = moment().startOf('minute');
                 var remainder = (60 - start.minute()) % 30;
                 var minDate = moment(start).add("minutes", remainder );
@@ -42,6 +44,16 @@
                     var submitEndDate = $('#eventDate').data('daterangepicker').endDate.format("MM/DD/YYYY hh:mm a");
                     document.getElementById('eventEnd').value = submitEndDate;                
                 });
+
+                $('input[type="radio"]').click(function() {
+                   if($(this).attr('value') == 'rso') {
+                        $('#show-me').show();           
+                   }
+
+                   else {
+                        $('#show-me').hide();   
+                   }
+               });
 
             });
 
@@ -95,14 +107,14 @@
             </label> 
         </div>
 
+        <div id='show-me'>
         <p>Select affiliated RSO:</p>
         <select name="rsoSelector" id="rsoSelector" style="width:100%" required>
-            
-            <option value="" disabled selected>None</option>
             {% for rso in rsos_list %}
                 <option value="{{rso}}" data-one="{{rso}}"> {{rso}} </option>
             {% endfor %}
         </select>
+        </div>
 
         <div class="push"></div>
 

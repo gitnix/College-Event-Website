@@ -405,6 +405,21 @@ DELIMITER ;
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$
+CREATE PROCEDURE `sp_update_user` (
+IN p_user_email varchar(255)
+)
+BEGIN
+    UPDATE users
+    SET user_role='admin'
+    WHERE user_email= p_user_email;
+END$$
+ 
+DELIMITER ;
+
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
 CREATE PROCEDURE `sp_get_universities`()
 BEGIN
     select * from universities;

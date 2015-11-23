@@ -95,7 +95,6 @@ def show_event_profile(eventid):
     try:    
         if session.get('user'):
             _event_id = int(eventid)
-            dogger = isinstance(_event_id, int)
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_event', (eventid, ))
@@ -184,7 +183,7 @@ def messages():
                 message_item = [
                     # the order of these is determined by the select sql in the stored procedure
                     # message_id, header, content, recepient id
-                    message[0], message[1], message[2], message[4]
+                    message[0], message[1], message[2], message[4], message[9]
                 ]
                 messages_to_insert.append(message_item)
             
@@ -213,6 +212,8 @@ def validate_comment():
         _event = request.form['eventId']
         _user = session.get('user-first-name')
 
+        _event_id = int(_event)
+
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -222,7 +223,7 @@ def validate_comment():
         if len(data) is 0:
             conn.commit()
             flash("Comment Created!", 'alert-success')
-            return redirect('/userhome')
+            return redirect(url_for('show_event_profile', eventid=_event))
         else:
             flash("Could not create comment")
         return redirect('/userhome')
@@ -460,7 +461,17 @@ def validate_rso():
             conn.commit()
             cursor.close()
             conn.close()
-            return render_template('eventmaker.html')
+            userid = session.get('user')
+            numuserid = int(userid)
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.callproc('sp_update_user',(_mainEmail, ))
+            conn.commit()
+            cursor.close()
+            conn.close()
+            session['user-role'] = 'admin'
+            return render_template('rsomaker.html')
 
         else:
             conn.commit()
