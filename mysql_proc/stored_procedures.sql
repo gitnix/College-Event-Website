@@ -119,7 +119,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_event`(
     IN p_eventPhone VARCHAR(255),
     IN p_eventLocation VARCHAR(255),
     IN p_eventDateStart DATETIME,
-    IN p_eventDateEnd DATETIME
+    IN p_eventDateEnd DATETIME,
+    IN p_eventuniversity VARCHAR(255),
+    IN p_eventrso VARCHAR(255)
 )
 BEGIN
     if ( select exists (select 1 from events where event_email = p_eventEmail) ) THEN
@@ -148,7 +150,9 @@ BEGIN
             event_phone,
             event_location,
             event_date_start,
-            event_date_end
+            event_date_end,
+            event_university,
+            event_rso
         )
         values
         (
@@ -159,7 +163,9 @@ BEGIN
             p_eventPhone,
             p_eventLocation,
             p_eventDateStart,
-            p_eventDateEnd
+            p_eventDateEnd,
+            p_eventuniversity,
+            p_eventrso
         );
      
     END IF;
@@ -255,13 +261,49 @@ BEGIN
     IF (p_event_type = 'private') THEN
         select * from events where
             event_university = p_university_id
-            AND event_type = 'private';
-    ELSE
+            AND event_type = 'private'
+            order by 
+            p_event_sort;
+    ELSEIF (p_event_type = 'rso') THEN
         select * from events 
-        where event_type = p_event_type
-        order by 
-        p_event_sort;
+            where event_type = p_event_type AND
+            event_university = p_university_id
+            order by 
+            p_event_sort;
+
+    ELSE 
+        select * from events 
+            where event_type = p_event_type 
+            order by 
+            p_event_sort;
     END IF;
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_rsos_of_user` (
+IN p_userEmail VARCHAR(255)
+)
+BEGIN
+        select rso_name from user_associates_rso  where
+            user_email = p_userEmail;
+END$$
+DELIMITER ;
+
+
+----------------------------------------------------------------------------------------
+
+
+DELIMITER $$
+CREATE PROCEDURE `sp_get_rsos_of_admin` (
+IN p_userEmail VARCHAR(255)
+)
+BEGIN
+        select rso_name from rsos  where
+            rso_admin = p_userEmail;
 END$$
 DELIMITER ;
 

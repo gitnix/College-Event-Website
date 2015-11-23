@@ -32,6 +32,7 @@ CREATE TABLE `events` (
  `event_date_start` DATETIME NOT NULL,
  `event_date_end` DATETIME NOT NULL,
  `event_university` int(8),
+ `event_rso` varchar(255),
  PRIMARY KEY (`event_id`),
  UNIQUE KEY(`event_id`,`event_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

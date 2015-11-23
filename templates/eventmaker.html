@@ -93,7 +93,18 @@
             <label class="radio-inline">
                 <input type="radio" name="eventType" value='rso'>RSO
             </label> 
-        </div>  
+        </div>
+
+        <p>Select affiliated RSO:</p>
+        <select name="rsoSelector" id="rsoSelector" style="width:100%" required>
+            
+            <option value="" disabled selected>None</option>
+            {% for rso in rsos_list %}
+                <option value="{{rso}}" data-one="{{rso}}"> {{rso}} </option>
+            {% endfor %}
+        </select>
+
+        <div class="push"></div>
 
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Create Event</button>
         

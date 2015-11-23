@@ -309,7 +309,21 @@ def validate_university():
 @app.route('/createevent')
 def create_event():
     if session.get('user_role') in ('admin', 'super_admin'):
-        return render_template('eventmaker.html')
+        _userEmail = session.get('user-email')
+        logging.warning(_userEmail)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_get_rsos_of_admin', (_userEmail, ))
+        rsos_list = cursor.fetchall()
+        logging.warning(rsos_list)
+        # conn.commit()
+        rsos_array = []
+        for rso in rsos_list:
+            rso_item = rso[0]
+            rsos_array.append(rso_item)
+        cursor.close()
+        conn.close()
+        return render_template('eventmaker.html', rsos_list = rsos_array)
     else:
         return render_template('error.html', error="You must be logged in to access this page.")
 
@@ -332,7 +346,7 @@ def validate_event():
         _eventStart = request.form['eventStart']
         _eventEnd = request.form['eventEnd']
 
-        _eventrso = request.form['eventRSO']
+        _eventrso = request.form['rsoSelector']
         _eventuniversity = session.get('user-university')
 
 
@@ -344,7 +358,7 @@ def validate_event():
         #let's call MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, date_object, date_object2))
+        cursor.callproc('sp_create_event', (_eventName, _eventType, _eventDescription, _eventEmail, _eventPhone, _eventLocation, date_object, date_object2, _eventuniversity, _eventrso))
         data = cursor.fetchall()
 
         if len(data) is 0:
