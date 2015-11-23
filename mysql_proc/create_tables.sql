@@ -97,8 +97,7 @@ CREATE TABLE `rso_petitions` (
 CREATE TABLE `user_associates_rso` (
  `user_email` varchar(255) NOT NULL,
  `rso_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`user_email`,`rso_name`),
-  UNIQUE KEY(`user_email`)
+  PRIMARY KEY (`user_email`,`rso_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_associates_university` (

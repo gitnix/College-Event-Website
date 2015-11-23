@@ -98,13 +98,16 @@ def show_event_profile(eventid):
     # show the event profile for that event
     try:    
         if session.get('user'):
-            # _event_id = eventid 
+            _event_id = int(eventid)
+            dogger = isinstance(_event_id, int)
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.callproc('sp_get_event', (eventid, ))
             eventdata = cursor.fetchall()
 
             logging.warning(eventid)
+            logging.warning(dogger)
+            logging.warning(_event_id)
             if len(eventdata) is 0:
                 conn.commit()
                 cursor.close()
@@ -116,8 +119,9 @@ def show_event_profile(eventid):
                 #in order it is:
                 #Name, Description, Email, Phone, Loacation, startdate, endDate, eventId
                 event_data = [
-                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8], eventid
+                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8], _event_id
                 ]
+                logging.warning(event_data[7])
 
             edate_start = event_data.pop(5)
             new_edate_start = datetime.strftime(edate_start, '%m/%d/%Y %I:%M %p')
@@ -133,7 +137,7 @@ def show_event_profile(eventid):
             conn = mysql.connect()
             cursor = conn.cursor()            
 
-            cursor.callproc('sp_get_comments', (eventid, ))
+            cursor.callproc('sp_get_comments', (_event_id, ))
             data = cursor.fetchall()
 
             # if len(data) is 0:
