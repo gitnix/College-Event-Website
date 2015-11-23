@@ -55,7 +55,7 @@ def userhome():
         if session.get('user'):
 
             _viewby = session.get('event-view-type')
-            logging.warning(_viewby)
+            
             _sortby = session.get('event-sort-type')
             _userFirstName = session.get('user-first-name')
             _userLastName = session.get('user-last-name')
@@ -87,10 +87,6 @@ def userhome():
 def change_type_sort():
     _type = request.form['eventType']
     session['event-view-type'] = _type
-    logging.warning("We are now in change_type")
-    logging.warning(session.get('event-view-type'))
-    logging.warning("we are still in change_type")
-    # return render_template('userhome.html')
     return redirect('/userhome')
 
 @app.route('/event/<eventid>')
@@ -105,9 +101,6 @@ def show_event_profile(eventid):
             cursor.callproc('sp_get_event', (eventid, ))
             eventdata = cursor.fetchall()
 
-            logging.warning(eventid)
-            logging.warning(dogger)
-            logging.warning(_event_id)
             if len(eventdata) is 0:
                 conn.commit()
                 cursor.close()
@@ -121,7 +114,6 @@ def show_event_profile(eventid):
                 event_data = [
                     eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8], _event_id
                 ]
-                logging.warning(event_data[7])
 
             edate_start = event_data.pop(5)
             new_edate_start = datetime.strftime(edate_start, '%m/%d/%Y %I:%M %p')
@@ -186,7 +178,7 @@ def messages():
             #     messages_dict.append(message_dict)
 
             message_list = cursor.fetchall()
-            logging.warning(message_list)
+            
             messages_to_insert = []
             for message in message_list:
                 message_item = [
@@ -195,7 +187,7 @@ def messages():
                     message[0], message[1], message[2], message[4]
                 ]
                 messages_to_insert.append(message_item)
-            logging.warning(messages_to_insert)
+            
 
             cursor.close()
             conn.close()
@@ -370,12 +362,12 @@ def validate_university():
 def create_event():
     if session.get('user_role') in ('admin', 'super_admin'):
         _userEmail = session.get('user-email')
-        logging.warning(_userEmail)
+        
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.callproc('sp_get_rsos_of_admin', (_userEmail, ))
         rsos_list = cursor.fetchall()
-        logging.warning(rsos_list)
+        
         # conn.commit()
         rsos_array = []
         for rso in rsos_list:
