@@ -40,6 +40,44 @@ DELIMITER ;
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_comment`(
+    IN p_user VARCHAR(255),
+    IN p_body VARCHAR(255),
+    IN p_event int(8)
+)
+BEGIN
+        insert into comments
+        (
+            comment_poster,
+            comment_body,
+            comment_event
+        )
+        values
+        (
+            p_user,
+            p_body,
+            p_event
+        );
+     
+END$$
+DELIMITER ;
+
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_comments`(
+    IN p_event int(8)
+)
+BEGIN
+    select * from comments where comment_event = p_event;
+     
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_user_associates_university`(
     IN p_email varchar(255),
     IN p_university_id int(8)

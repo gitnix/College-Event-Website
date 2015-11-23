@@ -42,6 +42,31 @@ s{% extends "layout.html" %}
         <p>{{eventinfo[3]}}</p>
     </div>
 
+    <ul class ='list-group'>
+        {% for comment_item in comments %}
+        <a href="#" class="list-group-item" >
+            <li>
+                <h2 class="list-group-item-heading">{{comment_item[0]}}</h2>
+                <p class="list-group-item-text">{{comment_item[1]}}</p>
+            </li>
+        </a>
+        {% endfor %}
+    </ul>
+
+
+    <form class="form-signin" action="/validate_comment" method="post">
+        
+        <label for="commentBody" class="sr-only">Message Body</label>
+        <textarea rows="3" name="commentBody" id="commentBody" class="form-control" placeholder="Type your comment here"></textarea>
+
+        <div class="push"></div>
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Post Comment</button>
+
+        <input type="hidden" name="eventId" id="eventId" value="{{eventinfo[7]}}"/>
+        
+    </form>
+
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 <script>
 

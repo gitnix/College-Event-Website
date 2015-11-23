@@ -5,6 +5,20 @@ They are not used in the application and are just for various testing
 
 
 
+THIS IS FOR SORTING EVENTS BY DATE AND RATING
+
+<div class="dropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort Events By
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">Date</a></li>
+                <li><a href="#">Rating</a></li>
+            </ul>
+        </div>
+
+
+
+
 
 eventmaker extra css js
 

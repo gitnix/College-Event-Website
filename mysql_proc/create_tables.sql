@@ -37,6 +37,14 @@ CREATE TABLE `events` (
  UNIQUE KEY(`event_id`,`event_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `comments` (
+ `comment_id` int(8) NOT NULL AUTO_INCREMENT,
+ `comment_poster` varchar(255) NOT NULL,
+ `comment_body` varchar(255) NOT NULL,
+ `comment_event` int(8) NOT NULL,
+ PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `rsos` (
  `rso_id` int(8) NOT NULL AUTO_INCREMENT,
  `rso_name` varchar(255) NOT NULL,

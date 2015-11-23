@@ -104,6 +104,7 @@ def show_event_profile(eventid):
             cursor.callproc('sp_get_event', (eventid, ))
             eventdata = cursor.fetchall()
 
+            logging.warning(eventid)
             if len(eventdata) is 0:
                 conn.commit()
                 cursor.close()
@@ -113,9 +114,9 @@ def show_event_profile(eventid):
 
             for eventinfo in eventdata:
                 #in order it is:
-                #Name, Description, Email, Phone, Loacation, startdate, endDate
+                #Name, Description, Email, Phone, Loacation, startdate, endDate, eventId
                 event_data = [
-                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8]
+                    eventinfo[1], eventinfo[3], eventinfo[4], eventinfo[5], eventinfo[6], eventinfo[7], eventinfo[8], eventid
                 ]
 
             edate_start = event_data.pop(5)
@@ -129,7 +130,31 @@ def show_event_profile(eventid):
             cursor.close()
             conn.close()
 
-            return render_template('event.html', eventinfo = event_data)
+            conn = mysql.connect()
+            cursor = conn.cursor()            
+
+            cursor.callproc('sp_get_comments', (eventid, ))
+            data = cursor.fetchall()
+
+            # if len(data) is 0:
+            #     conn.commit()
+            #     cursor.close()
+            #     conn.close()
+            #     return render_template('error.html', error="Page does not exist")
+
+            loaded_comments=[]
+            for comment in data:
+                #in order it is:
+                #Poster, Body, Event
+                comment_data = [
+                    comment[1], comment[2], comment[3]
+                ]
+                loaded_comments.append(comment_data)
+
+            cursor.close()
+            conn.close()
+
+            return render_template('event.html', eventinfo = event_data, comments = loaded_comments)
         else:
             return render_template('error.html', error="You must be logged in to access this page.")
 
@@ -180,6 +205,37 @@ def messages():
 @app.route('/createmessage')
 def create_message():
     return render_template('messagemaker.html')
+
+@app.route('/createcomment')
+def create_comment():
+    return render_template('commentmaker.html')
+
+@app.route('/validate_comment', methods=['POST'])
+def validate_comment():
+    try:
+        _body = request.form['commentBody']
+        _event = request.form['eventId']
+        _user = session.get('user-first-name')
+
+        #let's call MySQL
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_create_comment', (_user, _body, _event))
+        data = cursor.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+            flash("Comment Created!", 'alert-success')
+            return redirect('/userhome')
+        else:
+            flash("Could not create comment")
+        return redirect('/userhome')
+
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/createrso')
 def create_rso():

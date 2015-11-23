@@ -1,0 +1,47 @@
+
+
+{% extends "layout.html" %}
+
+{% block extra_css_js %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-formhelpers.min.css">
+    <script src="../static/js/bootstrap-formhelpers-phone.format.js"></script>
+    <script src="../static/js/bootstrap-formhelpers-phone.js"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        stepping:30,
+                        minDate:moment()
+                    });
+                });
+            });
+    </script>
+
+{% endblock %}
+
+
+
+{% block page %}Post Comment{% endblock %}
+
+{% block content %}
+
+<form class="form-signin" action="/validate_comment" method="post">
+        
+        <label for="messageBody" class="sr-only">Message Body</label>
+        <textarea rows="3" name="messageBody" id="messageBody" class="form-control" placeholder="Type your comment here"></textarea>
+
+        <div class="push"></div>
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Post Comment</button>
+        
+</form>
+    
+
+
+{% endblock %}
