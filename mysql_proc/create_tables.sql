@@ -44,6 +44,7 @@ CREATE TABLE `rsos` (
  `rso_phone` varchar(255) NOT NULL,
  `rso_university_id` int(8) NOT NULL,
  `rso_approval` int(1) NOT NULL DEFAULT 0,
+ `rso_admin` varchar(255) NOT NULL,
  PRIMARY KEY (`rso_id`),
  CONSTRAINT `rso_is_associated_with` FOREIGN KEY (`rso_university_id`) REFERENCES `universities` (`university_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -85,12 +86,10 @@ CREATE TABLE `rso_petitions` (
 
 
 CREATE TABLE `user_associates_rso` (
- `user_id` int(8) NOT NULL,
- `rso_id` int(8) NOT NULL,
- KEY `user_id` (`user_id`),
- KEY `rso_id` (`rso_id`),
- CONSTRAINT `user_associates_rso_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
- CONSTRAINT `user_associates_rso_2` FOREIGN KEY (`rso_id`) REFERENCES `rsos` (`rso_id`) ON DELETE CASCADE ON UPDATE CASCADE
+ `user_email` varchar(255) NOT NULL,
+ `rso_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_email`,`rso_name`),
+  UNIQUE KEY(`user_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_associates_university` (

@@ -169,6 +169,83 @@ DELIMITER ;
 ----------------------------------------------------------------------------------------
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_rso`(
+    IN p_admin_email VARCHAR(255),
+    IN p_user1 VARCHAR(255),
+    IN p_user2 VARCHAR(255),
+    IN p_user3 VARCHAR(255),
+    IN p_user4 VARCHAR(255),
+    IN p_user5 VARCHAR(255),
+    IN p_name VARCHAR(255),
+    IN p_description VARCHAR(255),
+    IN p_email VARCHAR(255),
+    IN p_phone VARCHAR(255),
+    IN p_universityid INT(8)
+)
+BEGIN
+    if ( select exists (select 1 from users where user_email = p_user1) ) AND
+        ( select exists (select 1 from users where user_email = p_user2) ) AND
+        ( select exists (select 1 from users where user_email = p_user3) ) AND
+        ( select exists (select 1 from users where user_email = p_user4) ) AND
+        ( select exists (select 1 from users where user_email = p_user5) )
+    THEN
+        insert into rsos
+        (
+            rso_name,
+            rso_description,
+            rso_email,
+            rso_phone,
+            rso_university_id,
+            rso_admin
+        )
+        values
+        (
+            p_name,
+            p_description,
+            p_email,
+            p_phone,
+            p_universityid,
+            p_admin_email
+        );
+    ELSE
+        select 'a user specified does not exist';
+     
+    END IF;
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_into_rso`(
+    IN p_main_user VARCHAR(255),
+    IN p_user1 VARCHAR(255),
+    IN p_user2 VARCHAR(255),
+    IN p_user3 VARCHAR(255),
+    IN p_user4 VARCHAR(255),
+    IN p_user5 VARCHAR(255),
+    IN p_rso_name VARCHAR(255)
+)
+BEGIN
+        insert into user_associates_rso
+        (
+            rso_name, user_email
+        )
+        values
+            (p_rso_name, p_main_user),
+            (p_rso_name, p_user1),
+            (p_rso_name, p_user2),
+            (p_rso_name, p_user3),
+            (p_rso_name, p_user4),
+            (p_rso_name, p_user5);
+END$$
+DELIMITER ;
+
+----------------------------------------------------------------------------------------
+
+
+DELIMITER $$
 CREATE PROCEDURE `sp_get_events_by_type_sort` (
 IN p_event_type VARCHAR(45),
 IN p_event_sort VARCHAR(45),

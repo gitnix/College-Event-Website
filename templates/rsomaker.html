@@ -27,7 +27,7 @@
 {% block page %}Create RSO{% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="/validate_event" method="post">
+    <form class="form-signin" action="/validate_rso" method="post">
         
         <label for="rsoName" class="sr-only">RSO Name</label>
         <input type="name" name="rsoName" id="rsoName" class="form-control" placeholder="RSO Name" value="{{request.form.rsoName}}" required autofocus>
@@ -47,15 +47,15 @@
         </p>
 
         <label for="rsoEmail1" class="sr-only">RSO Email Student 1</label>
-        <input type="email" name="rsoEmail" id="rsoEmail1" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <input type="email" name="rsoEmail1" id="rsoEmail1" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
         <label for="rsoEmail2" class="sr-only">RSO Email Student 2</label>
-        <input type="email" name="rsoEmail" id="rsoEmail2" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <input type="email" name="rsoEmail2" id="rsoEmail2" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
         <label for="rsoEmail3" class="sr-only">RSO Email Student 3</label>
-        <input type="email" name="rsoEmail" id="rsoEmail3" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <input type="email" name="rsoEmail3" id="rsoEmail3" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
         <label for="rsoEmail4" class="sr-only">RSO Email Student 4</label>
-        <input type="email" name="rsoEmail" id="rsoEmail4" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <input type="email" name="rsoEmail4" id="rsoEmail4" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
         <label for="rsoEmail5" class="sr-only">RSO Email Student 5</label>
-        <input type="email" name="rsoEmail" id="rsoEmail5" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
+        <input type="email" name="rsoEmail5" id="rsoEmail5" class="form-control" placeholder="student@university.edu" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$" value= "{{request.form.rsoEmail}}"  required>
 
         <div class="push"></div>
 

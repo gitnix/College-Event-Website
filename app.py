@@ -233,6 +233,7 @@ def validate_signin():
                 session['user-last-name'] = data[0][5]
                 session['message-sort'] = 'message_id'
                 session['user-university'] = data[0][6]
+                session['user-email'] = data[0][1]
                 return redirect('/userhome')
             else:
                 flash("Invalid Password")
@@ -331,6 +332,10 @@ def validate_event():
         _eventStart = request.form['eventStart']
         _eventEnd = request.form['eventEnd']
 
+        _eventrso = request.form['eventRSO']
+        _eventuniversity = session.get('user-university')
+
+
         date_object = datetime.strptime(_eventStart, '%m/%d/%Y %I:%M %p')
         date_object2 = datetime.strptime(_eventEnd, '%m/%d/%Y %I:%M %p')
 
@@ -354,6 +359,50 @@ def validate_event():
             cursor.close()
             conn.close()
         return render_template('eventmaker.html')
+
+    except Exception as err:
+        return json.dumps({'Exception error':str(err)})
+
+@app.route('/validate_rso', methods=['POST'])
+def validate_rso():
+    try:
+        _user1 = request.form['rsoEmail1']
+        _user2 = request.form['rsoEmail2']
+        _user3 = request.form['rsoEmail3']
+        _user4 = request.form['rsoEmail4']
+        _user5 = request.form['rsoEmail5']
+        _name = request.form['rsoName']
+        _description = request.form['rsoDescription']
+        _email = request.form['rsoEmail']
+        _phone = request.form['rsoPhone']
+
+        _rsouniversity = session.get('user-university')
+        _mainEmail = session.get('user-email')
+
+        #let's call MySQL
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_create_rso', (_mainEmail, _user1, _user2, _user3, _user4, _user5, _name, _description, _email, _phone, _rsouniversity))
+        data = cursor.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+            # conn = mysql.connect()
+            # cursor = conn.cursor()
+            cursor.callproc('sp_insert_into_rso', (_mainEmail, _user1, _user2, _user3, _user4, _user5, _name))
+            flash("RSO set up!", 'alert-success')
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return render_template('eventmaker.html')
+
+        else:
+            conn.commit()
+            flash("Not all valid users.", 'alert-warning')
+            cursor.close()
+            conn.close()
+            # return render_template('userhome.html')
+            return render_template('rsomaker.html')
 
     except Exception as err:
         return json.dumps({'Exception error':str(err)})
